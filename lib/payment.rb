@@ -1,17 +1,38 @@
 require 'date'
 class Payment
+  
+  def self.build(data = {})
+    new(data)
+  end
+  
   def initialize(data = {})
     @data = data
   end
   
-  def build
-    build_header
+  def segment
+    @segment ||= "01"
   end
   
-  protected
+  def header
+    @header ||= build_header
+  end
+  
+  def body
+    @body ||= build_body
+  end
+  
+  def record
+    @record ||= segment + header + build_body
+  end
 
+  protected
+    
   def build_header
     execution_date + bank_clearing_number + sequence_number + creation_date + payers_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
+  end
+  
+  def build_body
+    
   end
   
   def execution_date
