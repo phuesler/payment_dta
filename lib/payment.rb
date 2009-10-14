@@ -13,6 +13,10 @@ class Payment
     @segment2 ||= build_segment2
   end
   
+  def segment3
+    @segment3 ||= build_segment3
+  end
+  
   def header
     @header ||= build_header
   end
@@ -29,6 +33,10 @@ class Payment
   
   def build_segment2
     '02'
+  end
+  
+  def build_segment3
+    '03'
   end
   
   

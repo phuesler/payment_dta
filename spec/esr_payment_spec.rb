@@ -127,4 +127,62 @@ describe "ESR payment" do
       ESRPayment.new(@default_attriburtes).segment2.size.should == 128
     end
   end
+  
+  describe ESRPayment, 'segment 3' do
+    it "should set the segment field to 03" do
+      ESRPayment.new(@default_attriburtes).segment3[0,2].should == "03"
+    end
+    
+    it "should have the recipients ESR number" do
+      ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '012127029')).segment3[2,12].should == '/C/012127029'
+    end
+    
+    it "should have a recipient address line 1" do
+      ESRPayment.new(@default_attriburtes.merge(:recipient_address_line1 => 'Michael Recipient')).segment3[14,20].should == 'Michael Recipient'.ljust(20)
+    end
+
+    it "should have a recipient address line 2" do
+      ESRPayment.new(@default_attriburtes.merge(:recipient_address_line2 => 'Empfaengerstrasse 1')).segment3[34,20].should == 'Empfaengerstrasse 1'.ljust(20)
+    end
+
+    it "should have a recipient address line 3" do
+      ESRPayment.new(@default_attriburtes.merge(:recipient_address_line3 => '8640 Rapperswil')).segment3[54,20].should == '8640 Rapperswil'.ljust(20)
+    end
+
+    it "should have a recipient address line 4" do
+      ESRPayment.new(@default_attriburtes.merge(:recipient_address_line4 => 'Schweiz')).segment3[74,20].should == 'Schweiz'.ljust(20)
+    end
+    
+    describe "ESR reference number with 9 figure recipient esr number" do
+      it "should have an ESR reference number" do
+        ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '012127029',:esr_reference_number => '123456789012345678901234567')).segment3[94,27].should == '123456789012345678901234567'
+      end
+    
+      it "should justify right the ESR reference number" do
+        ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '12127029',:esr_reference_number => '9876543210123456')).segment3[94,27].should == '000000000009876543210123456'
+      end
+      
+      it "should have an esr reference number check" do
+        ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '12127029')).segment3[121,2].should == '  '
+      end
+    end
+
+    describe "ESR reference number with 5 figure recipient esr number" do
+      it "should have an ESR reference number justified left with blanks" do
+        ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '10304', :esr_reference_number => '012345678901234')).segment3[94,27].should == '012345678901234'.ljust(27)
+      end
+      
+      it "should have an esr reference number check" do
+        ESRPayment.new(@default_attriburtes.merge(:recipient_esr_number => '10304', :recipient_esr_number_check => '45')).segment3[121,2].should == '45'
+      end
+    end
+
+    it "should have a reserve field" do
+      ESRPayment.new(@default_attriburtes).segment3[123,5].should == ''.ljust(5)
+    end
+
+    it "should have a length of 128 characters" do
+      ESRPayment.new(@default_attriburtes).segment3.size.should == 128
+    end
+  end
 end
