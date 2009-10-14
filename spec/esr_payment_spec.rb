@@ -99,5 +99,32 @@ describe "ESR payment" do
   end
     
   describe ESRPayment, "segment 2" do
+    it "should set the segment field to 02" do
+      ESRPayment.new(@default_attriburtes).segment2[0,2].should == "02"
+    end
+    
+    it "should have an issuer address line 1" do
+      ESRPayment.new(@default_attriburtes.merge(:issuer_address_line1 => 'John Doe')).segment2[2,20].should == 'John Doe'.ljust(20)
+    end
+
+    it "should have an issuer address line 2" do
+      ESRPayment.new(@default_attriburtes.merge(:issuer_address_line2 => 'Bahnhofstrasse 1')).segment2[22,20].should == 'Bahnhofstrasse 1'.ljust(20)      
+    end
+
+    it "should have an issuer address line 3" do
+      ESRPayment.new(@default_attriburtes.merge(:issuer_address_line3 => '8000 Zurich')).segment2[42,20].should == '8000 Zurich'.ljust(20)
+    end
+    
+    it "should have an issuer address line 4" do
+      ESRPayment.new(@default_attriburtes.merge(:issuer_address_line4 => 'Schweiz')).segment2[62,20].should == 'Schweiz'.ljust(20)
+    end
+    
+    it "should have a reserve field" do
+      ESRPayment.new(@default_attriburtes).segment2[82,46].should == ''.ljust(46)
+    end
+    
+    it "should have a length of 128 characters" do
+      ESRPayment.new(@default_attriburtes).segment2.size.should == 128
+    end
   end
 end

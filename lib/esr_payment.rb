@@ -6,6 +6,10 @@ class ESRPayment < Payment
  def build_segment1
   super + reference_number + debit_account_number + debit_amount + reserve_field
  end
+ 
+ def build_segment2
+   super + issuer_address + reserve_field(46)
+ end
   
  private
  
@@ -33,8 +37,27 @@ class ESRPayment < Payment
   @data[:debit_amount].ljust(12)
  end
  
- def reserve_field
-  " ".ljust(14)
+ def reserve_field(length = 14)
+  " ".ljust(length)
+ end
+ 
+ def issuer_address
+  issuer_address_line1 + issuer_address_line2 + issuer_address_line3 + issuer_address_line4
+ end
+ 
+ def issuer_address_line1
+   @data[:issuer_address_line1].to_s.ljust(20)
  end
 
+ def issuer_address_line2
+   @data[:issuer_address_line2].to_s.ljust(20)
+ end
+
+ def issuer_address_line3
+   @data[:issuer_address_line3].to_s.ljust(20)
+ end
+
+ def issuer_address_line4
+   @data[:issuer_address_line4].to_s.ljust(20)
+ end
 end

@@ -6,7 +6,11 @@ class Payment
   end
   
   def segment1
-    @segment ||= build_segment1 
+    @segment1 ||= build_segment1 
+  end
+  
+  def segment2
+    @segment2 ||= build_segment2
   end
   
   def header
@@ -14,7 +18,7 @@ class Payment
   end
   
   def record
-    @record ||= segment1
+    @record ||= segment1 + segment2
   end
 
   protected
@@ -22,6 +26,11 @@ class Payment
   def build_segment1
     '01'+ header
   end
+  
+  def build_segment2
+    '02'
+  end
+  
   
   def build_header
     execution_date + bank_clearing_number + sequence_number + creation_date + payers_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
