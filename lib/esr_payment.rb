@@ -30,7 +30,7 @@ class ESRPayment < Payment
  end
  
  def debit_amount_valuta
-  " ".ljust(6)
+  ''.ljust(6)
  end
  
  def debit_amount_currency
@@ -42,7 +42,7 @@ class ESRPayment < Payment
  end
  
  def reserve_field(length = 14)
-  " ".ljust(length)
+  ''.ljust(length)
  end
  
  def issuer_address

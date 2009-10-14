@@ -53,38 +53,38 @@ class Payment
   end
   
   def sequence_number
-    "00000"
+    '00000'
   end
   
   def creation_date
-    Date.today.strftime("%y%m%d")
+    Date.today.strftime('%y%m%d')
   end
   
   def payers_clearing_number
-    @data[:payers_clearing_number].ljust(7,"0") rescue raise "Invalid payers_clearing_number"
+    @data[:payers_clearing_number].ljust(7,'0') rescue raise 'Invalid payers_clearing_number'
   end
   
   def file_identification
     if @data[:file_identification].nil?
-      raise "No file identification"
+      raise 'No file identification'
     else
       @data[:file_identification]
     end
   end
   
   def record_sequence_number
-    @data[:record_sequence_number].to_s.rjust(5,"0") rescue raise "No record sequence_number"
+    @data[:record_sequence_number].to_s.rjust(5,'0') rescue raise 'No record sequence_number'
   end
   
   def transaction_type
-    "826"
+    '826'
   end
   
   def payment_type
-    "1"
+    '1'
   end
   
   def transaction_flag
-    "0"
+    '0'
   end  
 end
