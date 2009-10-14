@@ -2,6 +2,10 @@
 
 Description goes here.
 
+== TODOS
+* Get an english version of the spec and document the code with it
+* Add validations
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
