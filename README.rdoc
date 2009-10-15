@@ -3,7 +3,6 @@
 Description goes here.
 
 == TODOS
-* Set sequence number in records
 * Get an english version of the spec and document the code with it
 * Add validations
 

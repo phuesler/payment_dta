@@ -19,6 +19,15 @@ describe DTAFile do
     file.records.first.issuer_transaction_number.should == "00123478901"
   end
   
+  it "should set the transaction number for any record added" do
+    file = DTAFile.new(@path)
+    file << Factory.create_esr_record
+    file << Factory.create_esr_record
+
+    file.records.to_a.first.sequence_number.should == "00001"
+    file.records.to_a[1].sequence_number.should == "00002"
+  end
+  
   describe DTAFile, "file records" do
     before(:each) do
       @record1 = Factory.create_esr_record(:execution_date  => "091022")

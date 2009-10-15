@@ -35,7 +35,11 @@ module DTA
       end
 
       def sequence_number
-        '00000'
+        @sequence_number.to_s.rjust(5,'0')
+      end
+      
+      def sequence_number=(sequence_number)
+        @sequence_number = sequence_number
       end
 
       def creation_date

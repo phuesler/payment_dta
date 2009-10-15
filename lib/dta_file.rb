@@ -24,13 +24,24 @@ class DTAFile
   def <<(record)
     record.issuer_transaction_number = @issuer_transaction_number
     @records << record
+    recalculate_sequence_numbers
   end
-  
+
   def self.create(path)
     dta_file = self.new(path)
     yield dta_file
     dta_file.write_file
     dta_file
+  end
+  
+  private
+  
+  def recalculate_sequence_numbers
+    start = 1
+    @records.each do |record|
+      record.sequence_number = start
+      start += 1
+    end
   end
 
 end
