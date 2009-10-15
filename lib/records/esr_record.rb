@@ -18,10 +18,6 @@ class ESRRecord < DTA::Records::Base
   issuer_transaction_number == other.issuer_transaction_number
  end
  
- def inspect
-  "[#{execution_date},#{issuers_clearing_number}, #{issuer_identification}, #{issuer_transaction_number}]"
- end
-
  def issuer_identification
   @data[:issuer_identification].to_s
  end

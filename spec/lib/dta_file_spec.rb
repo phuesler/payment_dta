@@ -47,7 +47,7 @@ describe DTAFile do
     end
         
     it "should sort the records" do
-      @dta_file.records.should == [@record1, @record2,@record3, @record4].sort
+      @dta_file.records.to_a.should == [@record1, @record2,@record3, @record4].sort
     end    
   end
 end

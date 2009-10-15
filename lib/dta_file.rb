@@ -1,14 +1,10 @@
+require 'set'
 class DTAFile
   attr_reader :records
-  class RecordCollection < Array
-    def <<(record)
-      super
-      sort!
-    end
-  end
+  
   def initialize(path)
     @path = path
-    @records = RecordCollection.new
+    @records = SortedSet.new
   end
   
   def write_file
@@ -20,6 +16,7 @@ class DTAFile
   def <<(record)
     @records << record
   end
+  
   def self.create(path)
     dta_file = self.new(path)
     yield dta_file
