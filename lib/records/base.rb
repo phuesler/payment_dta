@@ -42,8 +42,8 @@ module DTA
         Date.today.strftime('%y%m%d')
       end
 
-      def issuers_clearing_number
-        @data[:issuers_clearing_number].to_s.ljust(7,'0')
+      def issuer_clearing_number
+        @data[:issuer_clearing_number].to_s.ljust(7,'0')
       end
 
       def file_identification
@@ -85,7 +85,7 @@ module DTA
       end
 
       def build_header
-        execution_date + bank_clearing_number + sequence_number + creation_date + issuers_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
+        execution_date + bank_clearing_number + sequence_number + creation_date + issuer_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
       end
     end 
   end

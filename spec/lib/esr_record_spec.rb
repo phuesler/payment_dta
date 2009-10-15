@@ -61,7 +61,7 @@ describe 'ESRRecord' do
       end
 
       it 'should set the payers clearing number and pad it' do
-        Factory.create_esr_record(:issuers_clearing_number => '254').header[29,7].should == '2540000'
+        Factory.create_esr_record(:issuer_clearing_number => '254').header[29,7].should == '2540000'
       end
 
       it 'should set the file identification' do
@@ -191,8 +191,8 @@ describe 'ESRRecord' do
     end
     
     it "should sort by issuers clearing number when execution date and issuer identification are equal" do
-      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA", :issuers_clearing_number => '253')
-      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "AAAAA", :issuers_clearing_number => '254')
+      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA", :issuer_clearing_number => '253')
+      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "AAAAA", :issuer_clearing_number => '254')
       
       (@record1 < @record2).should be_true
     end

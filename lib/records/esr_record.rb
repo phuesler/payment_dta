@@ -5,7 +5,7 @@ class ESRRecord < DTA::Records::Base
  def <=>(other)
    if  execution_date == other.execution_date
      if issuer_identification == other.issuer_identification
-       return issuers_clearing_number <=> other.issuers_clearing_number
+       return issuer_clearing_number <=> other.issuer_clearing_number
      else
        return issuer_identification <=> other.issuer_identification
      end
@@ -13,17 +13,17 @@ class ESRRecord < DTA::Records::Base
      return execution_date <=> other.execution_date
    end
  end
- 
- def ==(other)
-  issuer_transaction_number == other.issuer_transaction_number
- end
- 
+  
  def issuer_identification
   @data[:issuer_identification].to_s
  end
  
  def issuer_transaction_number
-  @data[:issuer_transaction_number].to_s
+  @issuer_transaction_number || @data[:issuer_transaction_number].to_s
+ end
+ 
+ def issuer_transaction_number=(transaction_number)
+  @issuer_transaction_number = transaction_number
  end
  
  def issuer_reference_number

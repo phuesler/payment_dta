@@ -1,8 +1,18 @@
 require 'set'
 class DTAFile
+  class TransactionNumberGenerator
+    CHARS = ['0'..'9'].collect{|x| x.to_a}.flatten
+    def self.generate(length=11)
+      number = ''
+      length.times {number << CHARS[rand(CHARS.length)]}
+      number
+    end
+  end
+  
   attr_reader :records
   
-  def initialize(path)
+  def initialize(path, issuer_transaction_number = TransactionNumberGenerator.generate)
+    @issuer_transaction_number = issuer_transaction_number.to_s
     @path = path
     @records = SortedSet.new
   end
@@ -14,6 +24,7 @@ class DTAFile
   end
   
   def <<(record)
+    record.issuer_transaction_number = @issuer_transaction_number
     @records << record
   end
   

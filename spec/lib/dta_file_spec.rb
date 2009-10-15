@@ -6,13 +6,20 @@ describe DTAFile do
   before(:all) do
     @path = File.expand_path(File.dirname(__FILE__) + '/../../tmp/payments.dta')
   end
+  
   it "should create a file" do
     DTAFile.create(@path) do |file|
     end
     File.exist?(@path).should be_true
   end
   
-  describe DTAFile, "records" do
+  it "should set the issuer_transaction_number for any record added" do
+    file = DTAFile.new(@path, "00123478901")
+    file << Factory.create_esr_record
+    file.records.first.issuer_transaction_number.should == "00123478901"
+  end
+  
+  describe DTAFile, "file records" do
     before(:each) do
       @record1 = Factory.create_esr_record(:execution_date  => "091022")
       @record2 = Factory.create_esr_record(:execution_date  => "091021",:debit_amount => '3949.75')
