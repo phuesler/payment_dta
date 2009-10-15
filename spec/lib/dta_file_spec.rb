@@ -36,11 +36,12 @@ describe DTAFile do
       @record3 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "CCCCC")
       @record4 = Factory.create_esr_record(:execution_date  => "091028",:issuer_identification => "AAAAA")
       @dta_file = DTAFile.new(@path)
-      @dta_file.records << @record1
-      @dta_file.records << @record2
-      @dta_file.records << @record3
-      @dta_file.records << @record4
+      @dta_file << @record1
+      @dta_file << @record2
+      @dta_file << @record3
+      @dta_file << @record4
     end
+
     it "should add all records to it" do
       @dta_file.records.size.should equal(4)
     end
