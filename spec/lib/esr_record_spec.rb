@@ -8,7 +8,7 @@ describe 'ESRRecord' do
     end
     
     it 'should have a reference number' do
-      Factory.create_esr_record(:reference_number => 'ABC0100123478901').segment1[53,16].should == 'ABC0100123478901'
+      Factory.create_esr_record(:issuer_identification => 'ABC01', :issuer_transaction_number => '00123478901').segment1[53,16].should == 'ABC0100123478901'
     end
     
     it 'should have a debit account without IBAN justified left filled with blanks' do
@@ -61,7 +61,7 @@ describe 'ESRRecord' do
       end
 
       it 'should set the payers clearing number and pad it' do
-        Factory.create_esr_record(:payers_clearing_number => '254').header[29,7].should == '2540000'
+        Factory.create_esr_record(:issuers_clearing_number => '254').header[29,7].should == '2540000'
       end
 
       it 'should set the file identification' do
@@ -172,6 +172,29 @@ describe 'ESRRecord' do
 
     it 'should have a length of 128 characters' do
       Factory.create_esr_record.segment3.size.should == 128
+    end
+  end
+  
+  describe ESRRecord, "comparison" do
+    it "should sort by execution date ascending" do
+      @record1 = Factory.create_esr_record(:execution_date  => "091026")
+      @record2 = Factory.create_esr_record(:execution_date  => "091027")
+      
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuer identification when the execution date is equal" do
+      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA")
+      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "BBBBB")
+      
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuers clearing number when execution date and issuer identification are equal" do
+      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA", :issuers_clearing_number => '253')
+      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "AAAAA", :issuers_clearing_number => '254')
+      
+      (@record1 < @record2).should be_true
     end
   end
 end

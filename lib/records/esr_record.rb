@@ -1,28 +1,41 @@
 require 'records/base'
 class ESRRecord < DTA::Records::Base
+ include Comparable
+ 
+ def <=>(other)
+   if  execution_date == other.execution_date
+     if issuer_identification == other.issuer_identification
+       return issuers_clearing_number <=> other.issuers_clearing_number
+     else
+       return issuer_identification <=> other.issuer_identification
+     end
+   else
+     return execution_date <=> other.execution_date
+   end
+ end
+ 
+ def ==(other)
+  issuer_transaction_number == other.issuer_transaction_number
+ end
+ 
+ def inspect
+  "[#{execution_date},#{issuers_clearing_number}, #{issuer_identification}, #{issuer_transaction_number}]"
+ end
 
- protected
- 
- def build_segment1
-  super + reference_number + debit_account_number + debit_amount + reserve_field(14)
+ def issuer_identification
+  @data[:issuer_identification].to_s
  end
  
- def build_segment2
-   super + issuer_address + reserve_field(46)
+ def issuer_transaction_number
+  @data[:issuer_transaction_number].to_s
  end
  
- def build_segment3
-   super + recipient_esr_number + recipient_address + esr_reference_number + recipient_esr_number_check + reserve_field(5)
- end
-
- private
- 
- def reference_number
-  @data[:reference_number]
+ def issuer_reference_number
+  issuer_identification + issuer_transaction_number
  end
  
  def debit_account_number
-  @data[:debit_account_number].ljust(24)
+  @data[:debit_account_number].to_s.ljust(24)
  end
  
  def debit_amount
@@ -34,11 +47,11 @@ class ESRRecord < DTA::Records::Base
  end
  
  def debit_amount_currency
-  @data[:debit_amount_currency]
+  @data[:debit_amount_currency].to_s
  end
  
  def debit_amount_value
-  @data[:debit_amount].ljust(12)
+  @data[:debit_amount].to_s.ljust(12)
  end
  
  def reserve_field(length = 14)
@@ -100,4 +113,18 @@ class ESRRecord < DTA::Records::Base
  def recipient_esr_number_check
   @data[:recipient_esr_number_check].to_s.ljust(2)
  end
+ 
+ protected
+ 
+ def build_segment1
+  super + issuer_reference_number + debit_account_number + debit_amount + reserve_field(14)
+ end
+ 
+ def build_segment2
+   super + issuer_address + reserve_field(46)
+ end
+ 
+ def build_segment3
+   super + recipient_esr_number + recipient_address + esr_reference_number + recipient_esr_number_check + reserve_field(5)
+ end 
 end

@@ -25,26 +25,7 @@ module DTA
       def record
         @record ||= segment1 + segment2 + segment3
       end
-
-      protected
-
-      def build_segment1
-        '01'+ header
-      end
-
-      def build_segment2
-        '02'
-      end
-
-      def build_segment3
-        '03'
-      end
-
-
-      def build_header
-        execution_date + bank_clearing_number + sequence_number + creation_date + payers_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
-      end
-
+      
       def execution_date
         @data[:execution_date] || '000000'
       end
@@ -61,8 +42,8 @@ module DTA
         Date.today.strftime('%y%m%d')
       end
 
-      def payers_clearing_number
-        @data[:payers_clearing_number].ljust(7,'0') rescue raise 'Invalid payers_clearing_number'
+      def issuers_clearing_number
+        @data[:issuers_clearing_number].to_s.ljust(7,'0')
       end
 
       def file_identification
@@ -74,7 +55,7 @@ module DTA
       end
 
       def record_sequence_number
-        @data[:record_sequence_number].to_s.rjust(5,'0') rescue raise 'No record sequence_number'
+        @data[:record_sequence_number].to_s.rjust(5,'0')
       end
 
       def transaction_type
@@ -87,7 +68,25 @@ module DTA
 
       def transaction_flag
         '0'
-      end  
+      end
+
+      protected
+
+      def build_segment1
+        '01'+ header
+      end
+
+      def build_segment2
+        '02'
+      end
+
+      def build_segment3
+        '03'
+      end
+
+      def build_header
+        execution_date + bank_clearing_number + sequence_number + creation_date + issuers_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
+      end
     end 
   end
 end
