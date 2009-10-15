@@ -1,10 +1,16 @@
 = payment_dta_ch
 
-Description goes here.
+Ruby library for the Swiss DTA payment file format. See http://www.six-interbank-clearing.com/de/tkicch_index/tkicch_home/tkicch_standardization/tkicch_standardization_dta.htm?lang=1 for more Information.
+
+The documentation can be found here: http://www.six-interbank-clearing.com/dl_tkicch_dta.pdf
+
 
 == TODOS
-* Get an english version of the spec and document the code with it
+* Add total record
+* Add encoding conversion to ISO Latincode 8859-1
 * Add validations
+* Implement the missing record types
+* Get an english version of the spec and document the code with it
 
 == Note on Patches/Pull Requests
  
