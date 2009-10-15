@@ -1,5 +1,5 @@
 class DTAFile
-  attr_reader :records
+  attr_accessor :records
   
   def initialize
     @records = []
@@ -10,6 +10,7 @@ class DTAFile
     File.open(path,"w") do |file|
       dta_file.records.each{|record| file.puts record.record}
     end
+    dta_file
   end
   
   def << (record)
