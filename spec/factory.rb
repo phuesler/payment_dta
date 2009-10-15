@@ -1,6 +1,6 @@
-require 'esr_payment'
+require 'records/esr_record'
 class Factory
-  def self.create_esr_payment(attributes = {})
+  def self.create_esr_record(attributes = {})
     default_attributes = {
       :file_identification => 'ABC12',
       :sequence_number => 1,
@@ -10,6 +10,6 @@ class Factory
       :debit_amount_currency => 'CHF',
       :debit_amount => '3949.75'
     }.merge(attributes)
-    ESRPayment.new(default_attributes)
+    ESRRecord.new(default_attributes)
   end
 end

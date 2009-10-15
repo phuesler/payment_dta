@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'dta_file'
-require 'esr_payment'
+require 'records/esr_record'
 
 describe DTAFile do
   it "should create a file" do
@@ -16,11 +16,11 @@ describe DTAFile do
     end
     
     it "should add records to it" do
-      payment = Factory.create_esr_payment
+      record = Factory.create_esr_record
       DTAFile.create(@path) do |file|
-        file << payment
+        file << record
       end
-      File.open(@path).readlines.first.should == payment.record + "\n"
+      File.open(@path).readlines.first.should == record.record + "\n"
     end
   end
 end

@@ -1,5 +1,5 @@
-require 'payment'
-class ESRPayment < Payment
+require 'records/base'
+class ESRRecord < DTA::Records::Base
 
  protected
  
