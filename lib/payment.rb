@@ -22,7 +22,7 @@ class Payment
   end
   
   def record
-    @record ||= segment1 + segment2
+    @record ||= segment1 + segment2 + segment3
   end
 
   protected
