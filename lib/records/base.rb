@@ -26,44 +26,40 @@ module DTA
         @record ||= segment1 + segment2 + segment3
       end
       
-      def execution_date
-        @data[:execution_date] || '000000'
+      def requested_processing_date
+        @data[:requested_processing_date]
       end
 
-      def bank_clearing_number
-        ''.ljust(12,' ')
+      def beneficiary_bank_clearing_number
+        @data[:beneficiary_bank_clearing_number].to_s.ljust(12,' ')
       end
 
-      def sequence_number
-        @sequence_number.to_s.rjust(5,'0')
+      def output_sequence_number
+        @output_sequence_number.to_s.rjust(5,'0')
       end
       
-      def sequence_number=(sequence_number)
-        @sequence_number = sequence_number
+      def output_sequence_number=(output_sequence_number)
+        @output_sequence_number = output_sequence_number
       end
 
       def creation_date
         Date.today.strftime('%y%m%d')
       end
 
-      def issuer_clearing_number
-        @data[:issuer_clearing_number].to_s.ljust(7,'0')
+      def ordering_party_bank_clearing_number
+        @data[:ordering_party_bank_clearing_number].to_s.ljust(7,'0')
       end
 
-      def file_identification
-        if @data[:file_identification].nil?
+      def data_file_sender_identification
+        if @data[:data_file_sender_identification].nil?
           raise 'No file identification'
         else
-          @data[:file_identification]
+          @data[:data_file_sender_identification]
         end
       end
 
-      def record_sequence_number
-        @data[:record_sequence_number].to_s.rjust(5,'0')
-      end
-
-      def transaction_type
-        '826'
+      def entry_sequence_number
+        @data[:entry_sequence_number].to_s.rjust(5,'0')
       end
 
       def payment_type
@@ -89,7 +85,11 @@ module DTA
       end
 
       def build_header
-        execution_date + bank_clearing_number + sequence_number + creation_date + issuer_clearing_number + file_identification + record_sequence_number + transaction_type + payment_type + transaction_flag    
+        requested_processing_date + beneficiary_bank_clearing_number + output_sequence_number + creation_date + ordering_party_bank_clearing_number + data_file_sender_identification + entry_sequence_number + transaction_type + payment_type + transaction_flag    
+      end
+      
+      def reserve_field(length = 14)
+       ''.ljust(length)
       end
     end 
   end

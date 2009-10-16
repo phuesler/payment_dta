@@ -17,7 +17,7 @@ class DTAFile
   def <<(record)
     record.issuer_transaction_number = @issuer_transaction_number
     @records << record
-    recalculate_sequence_numbers
+    recalculate_output_sequence_numbers
   end
 
   def self.create(path)
@@ -29,10 +29,10 @@ class DTAFile
   
   private
   
-  def recalculate_sequence_numbers
+  def recalculate_output_sequence_numbers
     start = 1
     @records.each do |record|
-      record.sequence_number = start
+      record.output_sequence_number = start
       start += 1
     end
   end

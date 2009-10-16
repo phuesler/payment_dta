@@ -24,14 +24,14 @@ describe DTAFile do
     file << Factory.create_esr_record
     file << Factory.create_esr_record
 
-    file.records.to_a.first.sequence_number.should == "00001"
-    file.records.to_a[1].sequence_number.should == "00002"
+    file.records.to_a.first.output_sequence_number.should == "00001"
+    file.records.to_a[1].output_sequence_number.should == "00002"
   end
   
   describe DTAFile, "file records" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:execution_date  => "091022")
-      @record2 = Factory.create_esr_record(:execution_date  => "091021",:debit_amount => '3949.75')
+      @record1 = Factory.create_esr_record(:requested_processing_date  => "091022")
+      @record2 = Factory.create_esr_record(:requested_processing_date  => "091021",:debit_amount => '3949.75')
       @dta_file = DTAFile.create(@path) do |file|
         file << @record1
         file << @record2
@@ -47,10 +47,10 @@ describe DTAFile do
   
   describe DTAFile, "record sorting" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:execution_date  => "091027", :issuer_identification => "AAAAA")
-      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "BBBBB")
-      @record3 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "CCCCC")
-      @record4 = Factory.create_esr_record(:execution_date  => "091028",:issuer_identification => "AAAAA")
+      @record1 = Factory.create_esr_record(:requested_processing_date  => "091027", :issuer_identification => "AAAAA")
+      @record2 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "BBBBB")
+      @record3 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "CCCCC")
+      @record4 = Factory.create_esr_record(:requested_processing_date  => "091028",:issuer_identification => "AAAAA")
       @dta_file = DTAFile.new(@path)
       @dta_file << @record1
       @dta_file << @record2

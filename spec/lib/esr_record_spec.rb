@@ -38,53 +38,6 @@ describe 'ESRRecord' do
     it 'should have a total length of 128 characters' do
       Factory.create_esr_record.segment1.size.should == 128
     end
-    
-    describe 'header' do
-      it 'should have a total length of 51 characters' do
-        Factory.create_esr_record.header.size.should == 51
-      end
-
-      it 'should set a the correct execution date' do
-        Factory.create_esr_record(:execution_date => '051021').header[0,6].should == '051021'
-      end
-
-      it 'should fill the bc number with blanks' do
-        Factory.create_esr_record.header[6,12].should == ''.ljust(12,' ')
-      end
-
-      it 'should fill out a blank sequence number' do
-        Factory.create_esr_record.header[18,5].should == '00000'
-      end
-
-      it 'should set the creation date' do
-        Factory.create_esr_record.header[23,6].should == Date.today.strftime('%y%m%d')
-      end
-
-      it 'should set the payers clearing number and pad it' do
-        Factory.create_esr_record(:issuer_clearing_number => '254').header[29,7].should == '2540000'
-      end
-
-      it 'should set the file identification' do
-        Factory.create_esr_record(:file_identification => 'ABC12').header[36,5].should == 'ABC12'
-      end
-
-      it 'should should set the record sequence number' do
-       Factory.create_esr_record(:record_sequence_number => 1).header[41,5].should == '00001'
-      end
-
-      it 'should should set the transaction type to 826' do
-       Factory.create_esr_record.header[46,3].should == '826' 
-      end
-
-      it 'should set the payment type to 1' do
-       Factory.create_esr_record.header[49,1].should == '1' 
-      end
-
-      it 'should set the transaction flag to 0' do
-       Factory.create_esr_record.header[50,1].should == '0' 
-      end
-    end
-
   end
     
   describe ESRRecord, 'segment 2' do
@@ -177,22 +130,22 @@ describe 'ESRRecord' do
   
   describe ESRRecord, "comparison" do
     it "should sort by execution date ascending" do
-      @record1 = Factory.create_esr_record(:execution_date  => "091026")
-      @record2 = Factory.create_esr_record(:execution_date  => "091027")
+      @record1 = Factory.create_esr_record(:requested_processing_date  => "091026")
+      @record2 = Factory.create_esr_record(:requested_processing_date  => "091027")
       
       (@record1 < @record2).should be_true
     end
     
     it "should sort by issuer identification when the execution date is equal" do
-      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA")
-      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "BBBBB")
+      @record1 = Factory.create_esr_record(:requested_processing_date  => "091026", :issuer_identification => "AAAAA")
+      @record2 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "BBBBB")
       
       (@record1 < @record2).should be_true
     end
     
     it "should sort by issuers clearing number when execution date and issuer identification are equal" do
-      @record1 = Factory.create_esr_record(:execution_date  => "091026", :issuer_identification => "AAAAA", :issuer_clearing_number => '253')
-      @record2 = Factory.create_esr_record(:execution_date  => "091026",:issuer_identification => "AAAAA", :issuer_clearing_number => '254')
+      @record1 = Factory.create_esr_record(:requested_processing_date  => "091026", :issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '253')
+      @record2 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '254')
       
       (@record1 < @record2).should be_true
     end

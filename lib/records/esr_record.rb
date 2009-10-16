@@ -3,15 +3,23 @@ class ESRRecord < DTA::Records::Base
  include Comparable
  
  def <=>(other)
-   if  execution_date == other.execution_date
+   if  requested_processing_date == other.requested_processing_date
      if issuer_identification == other.issuer_identification
-       return issuer_clearing_number <=> other.issuer_clearing_number
+       return ordering_party_bank_clearing_number <=> other.ordering_party_bank_clearing_number
      else
        return issuer_identification <=> other.issuer_identification
      end
    else
-     return execution_date <=> other.execution_date
+     return requested_processing_date <=> other.requested_processing_date
    end
+ end
+ 
+ def transaction_type
+   '826'
+ end
+ 
+ def payment_type
+   '0'
  end
   
  def issuer_identification
@@ -19,7 +27,7 @@ class ESRRecord < DTA::Records::Base
  end
  
  def issuer_transaction_number
-  @issuer_transaction_number || @data[:issuer_transaction_number].to_s
+  (@issuer_transaction_number || @data[:issuer_transaction_number]).to_s.ljust(11,'0')
  end
  
  def issuer_transaction_number=(transaction_number)
@@ -49,11 +57,7 @@ class ESRRecord < DTA::Records::Base
  def debit_amount_value
   @data[:debit_amount].to_s.ljust(12)
  end
- 
- def reserve_field(length = 14)
-  ''.ljust(length)
- end
- 
+  
  def issuer_address
   issuer_address_line1 + issuer_address_line2 + issuer_address_line3 + issuer_address_line4
  end
