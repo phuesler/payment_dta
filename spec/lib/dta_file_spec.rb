@@ -9,6 +9,7 @@ describe DTAFile do
   
   it "should create a file" do
     DTAFile.create(@path) do |file|
+      file << Factory.create_esr_record
     end
     File.exist?(@path).should be_true
   end
@@ -28,10 +29,17 @@ describe DTAFile do
     file.records.to_a[1].output_sequence_number.should == "00002"
   end
   
+  it "should calculate the total amount" do
+    file = DTAFile.new(@path)
+    file << Factory.create_esr_record(:debit_amount => 420.50)
+    file << Factory.create_esr_record(:debit_amount => 320.20)
+    file.total.should == (420.50 + 320.20)
+  end
+  
   describe DTAFile, "file records" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:requested_processing_date  => "091022")
-      @record2 = Factory.create_esr_record(:requested_processing_date  => "091021",:debit_amount => '3949.75')
+      @record1 = Factory.create_esr_record(:debit_amount => 2222.22)
+      @record2 = Factory.create_esr_record(:debit_amount => 4444.44)
       @dta_file = DTAFile.create(@path) do |file|
         file << @record1
         file << @record2
@@ -42,7 +50,11 @@ describe DTAFile do
     it "should add the records to the file" do
       @file_records.should include(@record2.record + "\n")
       @file_records.should include(@record2.record + "\n")
-    end    
+    end
+    
+    it "should add a total record" do
+      @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).record)
+    end
   end
   
   describe DTAFile, "record sorting" do

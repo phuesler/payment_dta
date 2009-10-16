@@ -24,4 +24,8 @@ class TotalRecord < DTA::Records::Base
   def payment_type
     '0'
   end
+  
+  def requested_processing_date
+    '000000'
+  end
 end

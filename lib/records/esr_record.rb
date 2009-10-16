@@ -54,10 +54,14 @@ class ESRRecord < DTA::Records::Base
   @data[:debit_amount_currency].to_s
  end
  
+ def amount
+  @data[:debit_amount]
+ end
+ 
  def debit_amount_value
   @data[:debit_amount].to_s.ljust(12)
  end
-  
+   
  def issuer_address
   issuer_address_line1 + issuer_address_line2 + issuer_address_line3 + issuer_address_line4
  end

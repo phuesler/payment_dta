@@ -1,4 +1,5 @@
 require 'set'
+require 'records/total_record'
 class DTAFile
   attr_reader :records
   
@@ -11,6 +12,13 @@ class DTAFile
   def write_file
     File.open(@path,"w") do |file|
       @records.each{|record| file.puts record.record}
+      file.puts build_total_record.record
+    end
+  end
+  
+  def total
+    @records.inject(0) do |sum, record|
+      sum + record.amount.to_f
     end
   end
   
@@ -35,6 +43,13 @@ class DTAFile
       record.output_sequence_number = start
       start += 1
     end
+  end
+  
+  def build_total_record
+    TotalRecord.new(
+      :total_amount => total,
+      :data_file_sender_identification => @records.first.data_file_sender_identification
+    )
   end
 
 end

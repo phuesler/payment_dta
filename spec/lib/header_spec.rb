@@ -6,11 +6,7 @@ shared_examples_for "all headers" do
   it 'should have a total length of 51 characters' do
     Factory.create_record(@type).header.size.should == 51
   end
-  
-  it 'should set a the correct processing date' do
-    Factory.create_record(@type,:requested_processing_date => '051021').header[0,6].should == '051021'
-  end
-  
+    
   it 'should fill out a blank output sequence number' do
     Factory.create_record(@type).header[18,5].should == '00000'
   end
@@ -38,6 +34,10 @@ describe ESRRecord, 'header' do
   end
   
   it_should_behave_like 'all headers'
+  
+  it 'should set a the correct processing date' do
+    Factory.create_esr_record(:requested_processing_date => '051021').header[0,6].should == '051021'
+  end
     
   it 'should fill the beneficiarys bank clearing number with blanks' do
     Factory.create_esr_record.header[6,12].should == ''.ljust(12,' ')
@@ -73,5 +73,9 @@ describe TotalRecord, 'header' do
   
   it 'should set the payment type to 0' do
    Factory.create_total_record.header[49,1].should == '0' 
+  end
+  
+  it 'should set a the correct processing date' do
+    Factory.create_total_record.header[0,6].should == '000000'
   end
 end

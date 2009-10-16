@@ -22,7 +22,6 @@ class Factory
   
   def self.create_total_record(attributes = {})
     default_attributes = {
-      :requested_processing_date => Date.today.strftime('%y%m%d'),
       :data_file_sender_identification => 'ABC12',
       :total_amount => 233.451,
     }.merge(attributes)
