@@ -1,9 +1,17 @@
 require 'date'
+require 'character_conversion'
+
 module DTA
   module Records
     class Base
+      include DTA::CharacterConversion
+      
       def initialize(data = {})
         @data = data
+      end
+      
+      def to_dta
+        dta_string(record)
       end
 
       def segment1

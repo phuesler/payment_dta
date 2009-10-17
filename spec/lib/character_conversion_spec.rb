@@ -229,8 +229,8 @@ CONVERSION_MAP_UTF8 = {
 }
 
 
-class Test
-  include DTA::CharacterConversion
+class Converter
+  extend DTA::CharacterConversion
 end
 
 def create_character_from_ut8_decimal_code(code)
@@ -240,19 +240,42 @@ def create_character_from_ut8_decimal_code(code)
     [code.to_s[0,3].to_i,code.to_s[3,3].to_i].pack("C*")
   end
 end
-describe "character conversion" do
-  before(:each) do
-    @converter = Test.new
+describe "dta character conversion and encoding" do
+  # UTF-8 encoding uses 2 bytes for non US-ASCII characters
+  # ISO Latincode 8859-1 uses 1 byte
+  it "should map the string before encoding it" do
+    Converter.should_receive(:map_characters).with("Äöü").and_return("AEoeue")
+    Converter.dta_string("Äöü")
   end
   
-  CONVERSION_MAP_UTF8.each do |id,conversion|
-    it "should convert #{conversion[:name]} to '#{conversion[:convert_to]}'" do
-      character = create_character_from_ut8_decimal_code(id)
-      @converter.convert(character).should == conversion[:convert_to]
+  it "should encode the strings" do
+    Converter.should_receive(:encode_characters).with("AEoeue").and_return(Iconv.conv("ISO-8859-1", "UTF8","Äöü"))
+    Converter.dta_string("Äöü")
+  end
+  
+  describe "character mapping/reduction" do
+    CONVERSION_MAP_UTF8.each do |id,conversion|
+      it "should map #{conversion[:name]} to '#{conversion[:convert_to]}'" do
+        character = create_character_from_ut8_decimal_code(id)
+        Converter.map_characters(character).should == conversion[:convert_to]
+      end
     end
+
+    it "should map strings" do
+      Converter.map_characters("ÄäÜüÖö").should == "AEaeUEueOEoe"
+    end  
   end
-  
-  it "should convert strings" do
-    @converter.convert("ÄäÜüÖö").should == "AEaeUEueOEoe"
+    
+  describe 'DTA character encoding' do
+    
+    it "should have a default system encoding of utf8" do
+      utf8_string = "Ä"
+      utf8_string.size.should == 2
+    end
+    
+    it "should convert the encoding from UTF8 to ISO Latincode 8859-1" do
+      encoded_string = Converter.encode_characters("Ä")
+      encoded_string.size.should == 1
+    end
   end
 end

@@ -1,3 +1,4 @@
+require 'iconv'
 module DTA
   module CharacterConversion
     CONVERSION_MAP_UTF8 = {
@@ -226,7 +227,7 @@ module DTA
       195190 => {:name => "LATIN SMALL LETTER THORN", :convert_to => '.'},
       195191 => {:name => "LATIN SMALL LETTER Y WITH DIAERESIS", :convert_to => 'y'},
     } unless defined?(CONVERSION_MAP_UTF8)
-    def convert(string)
+    def map_characters(string)
       new_string = ""
       string.each_char do |character|
         code = character.size == 1 ? character[0] : "#{character[0]}#{character[1]}".to_i
@@ -237,6 +238,14 @@ module DTA
         end
       end
       new_string
+    end
+    
+    def encode_characters(string)
+      Iconv.conv("ISO-8859-1", "UTF8",string)
+    end
+    
+    def dta_string(string)
+      encode_characters(map_characters(string))
     end
   end
 end

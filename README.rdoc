@@ -6,7 +6,6 @@ The documentation can be found here: http://www.six-interbank-clearing.com/dl_tk
 
 
 == TODOS
-* Add encoding conversion to ISO Latincode 8859-1
 * Add validations
 * Implement the missing record types
 * Get an english version of the spec and document the code with it

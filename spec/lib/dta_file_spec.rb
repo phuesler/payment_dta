@@ -47,13 +47,13 @@ describe DTAFile do
       @file_records = File.open(@path).readlines
     end
     
-    it "should add the records to the file" do
-      @file_records.should include(@record2.record + "\n")
-      @file_records.should include(@record2.record + "\n")
+    it "should add the records to the file in dta format" do
+      @file_records.should include(@record2.to_dta + "\n")
+      @file_records.should include(@record2.to_dta + "\n")
     end
     
     it "should add a total record" do
-      @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).record)
+      @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).to_dta)
     end
   end
   

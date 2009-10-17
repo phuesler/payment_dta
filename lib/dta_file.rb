@@ -11,8 +11,8 @@ class DTAFile
   
   def write_file
     File.open(@path,"w") do |file|
-      @records.each{|record| file.puts record.record}
-      file.puts build_total_record.record
+      @records.each{|record| file.puts record.to_dta}
+      file.puts build_total_record.to_dta
     end
   end
   
