@@ -1,5 +1,5 @@
-require 'records/base'
-class ESRRecord < DTA::Records::Base
+require 'payments/base'
+class ESRPayment < DTA::Payments::Base
  include Comparable
  
  def <=>(other)

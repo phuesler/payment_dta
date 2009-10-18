@@ -1,5 +1,5 @@
 require 'set'
-require 'records/total_record'
+require 'payments/total_record'
 class DTAFile
   attr_reader :records
   

@@ -2,7 +2,7 @@ require 'date'
 require 'character_conversion'
 
 module DTA
-  module Records
+  module Payments
     class Base
       include DTA::CharacterConversion
       

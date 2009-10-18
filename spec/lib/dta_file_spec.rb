@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'dta_file'
-require 'records/esr_record'
+require 'payments/esr_payment'
 
 describe DTAFile do
   before(:all) do
@@ -9,21 +9,21 @@ describe DTAFile do
   
   it "should create a file" do
     DTAFile.create(@path) do |file|
-      file << Factory.create_esr_record
+      file << Factory.create_esr_payment
     end
     File.exist?(@path).should be_true
   end
   
   it "should set the transaction_number for any record added" do
     file = DTAFile.new(@path, "00123478901")
-    file << Factory.create_esr_record
+    file << Factory.create_esr_payment
     file.records.first.transaction_number.should == "00123478901"
   end
   
   it "should set the transaction number for any record added" do
     file = DTAFile.new(@path)
-    file << Factory.create_esr_record
-    file << Factory.create_esr_record
+    file << Factory.create_esr_payment
+    file << Factory.create_esr_payment
 
     file.records.to_a.first.output_sequence_number.should == "00001"
     file.records.to_a[1].output_sequence_number.should == "00002"
@@ -31,15 +31,15 @@ describe DTAFile do
   
   it "should calculate the total amount" do
     file = DTAFile.new(@path)
-    file << Factory.create_esr_record(:payment_amount => 420.50)
-    file << Factory.create_esr_record(:payment_amount => 320.20)
+    file << Factory.create_esr_payment(:payment_amount => 420.50)
+    file << Factory.create_esr_payment(:payment_amount => 320.20)
     file.total.should == (420.50 + 320.20)
   end
   
   describe DTAFile, "file records" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:payment_amount => 2222.22)
-      @record2 = Factory.create_esr_record(:payment_amount => 4444.44)
+      @record1 = Factory.create_esr_payment(:payment_amount => 2222.22)
+      @record2 = Factory.create_esr_payment(:payment_amount => 4444.44)
       @dta_file = DTAFile.create(@path) do |file|
         file << @record1
         file << @record2
@@ -59,10 +59,10 @@ describe DTAFile do
   
   describe DTAFile, "record sorting" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:requested_processing_date  => "091027", :issuer_identification => "AAAAA")
-      @record2 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "BBBBB")
-      @record3 = Factory.create_esr_record(:requested_processing_date  => "091026",:issuer_identification => "CCCCC")
-      @record4 = Factory.create_esr_record(:requested_processing_date  => "091028",:issuer_identification => "AAAAA")
+      @record1 = Factory.create_esr_payment(:requested_processing_date  => "091027", :issuer_identification => "AAAAA")
+      @record2 = Factory.create_esr_payment(:requested_processing_date  => "091026",:issuer_identification => "BBBBB")
+      @record3 = Factory.create_esr_payment(:requested_processing_date  => "091026",:issuer_identification => "CCCCC")
+      @record4 = Factory.create_esr_payment(:requested_processing_date  => "091028",:issuer_identification => "AAAAA")
       @dta_file = DTAFile.new(@path)
       @dta_file << @record1
       @dta_file << @record2

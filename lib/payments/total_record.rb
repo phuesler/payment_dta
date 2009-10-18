@@ -1,6 +1,6 @@
-require 'records/base'
+require 'payments/base'
 
-class TotalRecord < DTA::Records::Base
+class TotalRecord < DTA::Payments::Base
   def segment1
     super + total_amount + reserve_field(59)
   end

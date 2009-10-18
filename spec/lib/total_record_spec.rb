@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require 'records/total_record'
+require 'payments/total_record'
 
 describe TotalRecord do  
   it 'should have the segment 1 field set' do

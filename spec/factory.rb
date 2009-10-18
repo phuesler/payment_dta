@@ -1,10 +1,10 @@
-require 'records/esr_record'
-require 'records/total_record'
+require 'payments/esr_payment'
+require 'payments/total_record'
 class Factory
-  def self.create_record(type, attributes = {})
-    send("create_#{type.to_s}_record",attributes)
+  def self.create_payment(type, attributes = {})
+    send("create_#{type.to_s}_payment",attributes)
   end
-  def self.create_esr_record(attributes = {})
+  def self.create_esr_payment(attributes = {})
     default_attributes = {
       :requested_processing_date => Date.today.strftime('%y%m%d'),
      :data_file_sender_identification => 'ÄÜ2',
@@ -17,14 +17,17 @@ class Factory
       :transaction_number => rand(100000000000).to_s,
       :ordering_party_bank_clearing_number => '253'
     }.merge(attributes)
-    ESRRecord.new(default_attributes)
+    ESRPayment.new(default_attributes)
   end
   
-  def self.create_total_record(attributes = {})
+  def self.create_total_payment(attributes = {})
     default_attributes = {
       :data_file_sender_identification => 'ÄÜ2',
       :total_amount => 233.451,
     }.merge(attributes)
     TotalRecord.new(default_attributes)
+  end
+  class << self
+    alias :create_total_record :create_total_payment
   end
 end
