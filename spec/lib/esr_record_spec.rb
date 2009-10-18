@@ -45,20 +45,20 @@ describe 'ESRRecord' do
       Factory.create_esr_record.segment2[0,2].should == '02'
     end
     
-    it 'should have an issuer address line 1' do
-      Factory.create_esr_record(:issuer_address_line1 => 'John Doe').segment2[2,20].should == 'John Doe'.ljust(20)
+    it 'should have an ordering partys address line 1' do
+      Factory.create_esr_record(:ordering_partys_address_line1 => 'John Doe').segment2[2,20].should == 'John Doe'.ljust(20)
     end
 
-    it 'should have an issuer address line 2' do
-      Factory.create_esr_record(:issuer_address_line2 => 'Bahnhofstrasse 1').segment2[22,20].should == 'Bahnhofstrasse 1'.ljust(20)      
+    it 'should have an ordering partys address line 2' do
+      Factory.create_esr_record(:ordering_partys_address_line2 => 'Bahnhofstrasse 1').segment2[22,20].should == 'Bahnhofstrasse 1'.ljust(20)      
     end
 
-    it 'should have an issuer address line 3' do
-      Factory.create_esr_record(:issuer_address_line3 => '8000 Zurich').segment2[42,20].should == '8000 Zurich'.ljust(20)
+    it 'should have an ordering partys address line 3' do
+      Factory.create_esr_record(:ordering_partys_address_line3 => '8000 Zurich').segment2[42,20].should == '8000 Zurich'.ljust(20)
     end
     
-    it 'should have an issuer address line 4' do
-      Factory.create_esr_record(:issuer_address_line4 => 'Schweiz').segment2[62,20].should == 'Schweiz'.ljust(20)
+    it 'should have an ordering partys address line 4' do
+      Factory.create_esr_record(:ordering_partys_address_line4 => 'Schweiz').segment2[62,20].should == 'Schweiz'.ljust(20)
     end
     
     it 'should have a reserve field' do
@@ -75,8 +75,8 @@ describe 'ESRRecord' do
       Factory.create_esr_record.segment3[0,2].should == '03'
     end
     
-    it 'should have the recipients ESR number' do
-      Factory.create_esr_record(:recipient_esr_number => '012127029').segment3[2,12].should == '/C/012127029'
+    it 'should have the beneficiarys ESR party number' do
+      Factory.create_esr_record(:beneficiarys_esr_party_number => '012127029').segment3[2,12].should == '/C/012127029'
     end
     
     it 'should have a recipient address line 1' do
@@ -97,25 +97,25 @@ describe 'ESRRecord' do
     
     describe 'ESR reference number with 9 figure recipient esr number' do
       it 'should have an ESR reference number' do
-        Factory.create_esr_record(:recipient_esr_number => '012127029',:esr_reference_number => '123456789012345678901234567').segment3[94,27].should == '123456789012345678901234567'
+        Factory.create_esr_record(:beneficiarys_esr_party_number => '012127029',:reason_for_payment_esr_reference_number => '123456789012345678901234567').segment3[94,27].should == '123456789012345678901234567'
       end
     
       it 'should justify right the ESR reference number' do
-        Factory.create_esr_record(:recipient_esr_number => '12127029',:esr_reference_number => '9876543210123456').segment3[94,27].should == '000000000009876543210123456'
+        Factory.create_esr_record(:beneficiarys_esr_party_number => '12127029',:reason_for_payment_esr_reference_number => '9876543210123456').segment3[94,27].should == '000000000009876543210123456'
       end
       
       it 'should have an esr reference number check' do
-        Factory.create_esr_record(:recipient_esr_number => '12127029').segment3[121,2].should == '  '
+        Factory.create_esr_record(:beneficiarys_esr_party_number => '12127029').segment3[121,2].should == '  '
       end
     end
 
     describe 'ESR reference number with 5 figure recipient esr number' do
       it 'should have an ESR reference number justified left with blanks' do
-        Factory.create_esr_record(:recipient_esr_number => '10304', :esr_reference_number => '012345678901234').segment3[94,27].should == '012345678901234'.ljust(27)
+        Factory.create_esr_record(:beneficiarys_esr_party_number => '10304', :reason_for_payment_esr_reference_number => '012345678901234').segment3[94,27].should == '012345678901234'.ljust(27)
       end
       
       it 'should have an esr reference number check' do
-        Factory.create_esr_record(:recipient_esr_number => '10304', :recipient_esr_number_check => '45').segment3[121,2].should == '45'
+        Factory.create_esr_record(:beneficiarys_esr_party_number => '10304', :beneficiarys_esr_party_number_check => '45').segment3[121,2].should == '45'
       end
     end
 

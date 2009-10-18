@@ -62,28 +62,28 @@ class ESRRecord < DTA::Records::Base
   @data[:payment_amount].to_s.ljust(12)
  end
    
- def issuer_address
-  issuer_address_line1 + issuer_address_line2 + issuer_address_line3 + issuer_address_line4
+ def ordering_partys_address
+  ordering_partys_address_line1 + ordering_partys_address_line2 + ordering_partys_address_line3 + ordering_partys_address_line4
  end
  
- def issuer_address_line1
-   @data[:issuer_address_line1].to_s.ljust(20)
+ def ordering_partys_address_line1
+   @data[:ordering_partys_address_line1].to_s.ljust(20)
  end
 
- def issuer_address_line2
-   @data[:issuer_address_line2].to_s.ljust(20)
+ def ordering_partys_address_line2
+   @data[:ordering_partys_address_line2].to_s.ljust(20)
  end
 
- def issuer_address_line3
-   @data[:issuer_address_line3].to_s.ljust(20)
+ def ordering_partys_address_line3
+   @data[:ordering_partys_address_line3].to_s.ljust(20)
  end
 
- def issuer_address_line4
-   @data[:issuer_address_line4].to_s.ljust(20)
+ def ordering_partys_address_line4
+   @data[:ordering_partys_address_line4].to_s.ljust(20)
  end
  
- def recipient_esr_number
-  "/C/#{@data[:recipient_esr_number].to_s.rjust(9,'0')}"
+ def beneficiarys_esr_party_number
+  "/C/#{@data[:beneficiarys_esr_party_number].to_s.rjust(9,'0')}"
  end
  
  def recipient_address
@@ -106,16 +106,16 @@ class ESRRecord < DTA::Records::Base
    @data[:recipient_address_line4].to_s.ljust(20)
  end
  
- def esr_reference_number
-  if @data[:recipient_esr_number].to_s.size == 5
-    @data[:esr_reference_number].to_s.ljust(27)
+ def reason_for_payment_esr_reference_number
+  if @data[:beneficiarys_esr_party_number].to_s.size == 5
+    @data[:reason_for_payment_esr_reference_number].to_s.ljust(27)
   else
-    @data[:esr_reference_number].to_s.rjust(27,'0')
+    @data[:reason_for_payment_esr_reference_number].to_s.rjust(27,'0')
   end
  end
  
- def recipient_esr_number_check
-  @data[:recipient_esr_number_check].to_s.ljust(2)
+ def beneficiarys_esr_party_number_check
+  @data[:beneficiarys_esr_party_number_check].to_s.ljust(2)
  end
  
  protected
@@ -125,10 +125,10 @@ class ESRRecord < DTA::Records::Base
  end
  
  def build_segment2
-   super + issuer_address + reserve_field(46)
+   super + ordering_partys_address + reserve_field(46)
  end
  
  def build_segment3
-   super + recipient_esr_number + recipient_address + esr_reference_number + recipient_esr_number_check + reserve_field(5)
+   super + beneficiarys_esr_party_number + recipient_address + reason_for_payment_esr_reference_number + beneficiarys_esr_party_number_check + reserve_field(5)
  end 
 end
