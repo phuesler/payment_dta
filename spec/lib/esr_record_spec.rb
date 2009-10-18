@@ -8,27 +8,27 @@ describe 'ESRRecord' do
     end
     
     it 'should have a reference number' do
-      Factory.create_esr_record(:issuer_identification => 'ABC01', :issuer_transaction_number => '00123478901').segment1[53,16].should == 'ABC0100123478901'
+      Factory.create_esr_record(:issuer_identification => 'ABC01', :transaction_number => '00123478901').segment1[53,16].should == 'ABC0100123478901'
     end
     
-    it 'should have a debit account without IBAN justified left filled with blanks' do
-      Factory.create_esr_record(:debit_account_number => '10235678').segment1[69,24].should == '10235678                '
+    it 'should have an account to be debited without IBAN justified left filled with blanks' do
+      Factory.create_esr_record(:account_to_be_debited => '10235678').segment1[69,24].should == '10235678                '
     end
     
-    it 'should have a debit account with IBAN' do
-      Factory.create_esr_record(:debit_account_number => 'CH9300762011623852957').segment1[69,24].should == 'CH9300762011623852957   '
+    it 'should have an account to be debited with IBAN' do
+      Factory.create_esr_record(:account_to_be_debited => 'CH9300762011623852957').segment1[69,24].should == 'CH9300762011623852957   '
     end
     
-    it 'should have a blank debit amount valuta (6 blanks)' do
+    it 'should have a blank payment amount valuta (6 blanks)' do
       Factory.create_esr_record.segment1[93,6].should == '      '
     end
     
-    it 'should have a debit amount currency code' do
-     Factory.create_esr_record(:debit_amount_currency => 'CHF').segment1[99,3].should == 'CHF'
+    it 'should have a payment amount currency code' do
+     Factory.create_esr_record(:payment_amount_currency => 'CHF').segment1[99,3].should == 'CHF'
     end
     
-    it 'should have a debit amount justified left filled with blanks' do
-      Factory.create_esr_record(:debit_amount => '3949.75').segment1[102,12].should == '3949.75     '
+    it 'should have a payment amount justified left filled with blanks' do
+      Factory.create_esr_record(:payment_amount => '3949.75').segment1[102,12].should == '3949.75     '
     end
     
     it 'should have a reserve field' do

@@ -14,10 +14,10 @@ describe DTAFile do
     File.exist?(@path).should be_true
   end
   
-  it "should set the issuer_transaction_number for any record added" do
+  it "should set the transaction_number for any record added" do
     file = DTAFile.new(@path, "00123478901")
     file << Factory.create_esr_record
-    file.records.first.issuer_transaction_number.should == "00123478901"
+    file.records.first.transaction_number.should == "00123478901"
   end
   
   it "should set the transaction number for any record added" do
@@ -31,15 +31,15 @@ describe DTAFile do
   
   it "should calculate the total amount" do
     file = DTAFile.new(@path)
-    file << Factory.create_esr_record(:debit_amount => 420.50)
-    file << Factory.create_esr_record(:debit_amount => 320.20)
+    file << Factory.create_esr_record(:payment_amount => 420.50)
+    file << Factory.create_esr_record(:payment_amount => 320.20)
     file.total.should == (420.50 + 320.20)
   end
   
   describe DTAFile, "file records" do
     before(:each) do
-      @record1 = Factory.create_esr_record(:debit_amount => 2222.22)
-      @record2 = Factory.create_esr_record(:debit_amount => 4444.44)
+      @record1 = Factory.create_esr_record(:payment_amount => 2222.22)
+      @record2 = Factory.create_esr_record(:payment_amount => 4444.44)
       @dta_file = DTAFile.create(@path) do |file|
         file << @record1
         file << @record2

@@ -26,40 +26,40 @@ class ESRRecord < DTA::Records::Base
   @data[:issuer_identification].to_s
  end
  
- def issuer_transaction_number
-  (@issuer_transaction_number || @data[:issuer_transaction_number]).to_s.ljust(11,'0')
+ def transaction_number
+  (@transaction_number || @data[:transaction_number]).to_s.ljust(11,'0')
  end
  
- def issuer_transaction_number=(transaction_number)
-  @issuer_transaction_number = transaction_number
+ def transaction_number=(transaction_number)
+  @transaction_number = transaction_number
  end
  
- def issuer_reference_number
-  issuer_identification + issuer_transaction_number
+ def reference_number
+  issuer_identification + transaction_number
  end
  
- def debit_account_number
-  @data[:debit_account_number].to_s.ljust(24)
+ def account_to_be_debited
+  @data[:account_to_be_debited].to_s.ljust(24)
  end
  
- def debit_amount
-   debit_amount_valuta + debit_amount_currency + debit_amount_value
+ def payment_amount
+   payment_amount_valuta + payment_amount_currency + payment_amount_value
  end
  
- def debit_amount_valuta
+ def payment_amount_valuta
   ''.ljust(6)
  end
  
- def debit_amount_currency
-  @data[:debit_amount_currency].to_s
+ def payment_amount_currency
+  @data[:payment_amount_currency].to_s
  end
  
  def amount
-  @data[:debit_amount]
+  @data[:payment_amount]
  end
  
- def debit_amount_value
-  @data[:debit_amount].to_s.ljust(12)
+ def payment_amount_value
+  @data[:payment_amount].to_s.ljust(12)
  end
    
  def issuer_address
@@ -121,7 +121,7 @@ class ESRRecord < DTA::Records::Base
  protected
  
  def build_segment1
-  super + issuer_reference_number + debit_account_number + debit_amount + reserve_field(14)
+  super + reference_number + account_to_be_debited + payment_amount + reserve_field(14)
  end
  
  def build_segment2

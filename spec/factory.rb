@@ -10,11 +10,11 @@ class Factory
      :data_file_sender_identification => 'ÄÜ2',
       :output_sequence_number => 1,
       :payers_clearing_number => '254',
-      :debit_account_number => '10235678',
-      :debit_amount_currency => 'CHF',
-      :debit_amount => '3949.75',
+      :account_to_be_debited => '10235678',
+      :payment_amount_currency => 'CHF',
+      :payment_amount => '3949.75',
       :issuer_identification => 'ABC01',
-      :issuer_transaction_number => rand(100000000000).to_s,
+      :transaction_number => rand(100000000000).to_s,
       :ordering_party_bank_clearing_number => '253'
     }.merge(attributes)
     ESRRecord.new(default_attributes)

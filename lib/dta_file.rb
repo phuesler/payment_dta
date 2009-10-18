@@ -3,8 +3,8 @@ require 'records/total_record'
 class DTAFile
   attr_reader :records
   
-  def initialize(path, issuer_transaction_number = rand(100000000000).to_s)
-    @issuer_transaction_number = issuer_transaction_number.to_s
+  def initialize(path, transaction_number = rand(100000000000).to_s)
+    @transaction_number = transaction_number.to_s
     @path = path
     @records = SortedSet.new
   end
@@ -23,7 +23,7 @@ class DTAFile
   end
   
   def <<(record)
-    record.issuer_transaction_number = @issuer_transaction_number
+    record.transaction_number = @transaction_number
     @records << record
     recalculate_output_sequence_numbers
   end
