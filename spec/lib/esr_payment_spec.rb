@@ -79,23 +79,23 @@ describe 'ESRPayment' do
       Factory.create_esr_payment(:beneficiarys_esr_party_number => '012127029').segment3[2,12].should == '/C/012127029'
     end
     
-    it 'should have a recipient address line 1' do
-      Factory.create_esr_payment(:recipient_address_line1 => 'Michael Recipient').segment3[14,20].should == 'Michael Recipient'.ljust(20)
+    it 'should have a beneficiary address line 1' do
+      Factory.create_esr_payment(:beneficiary_address_line1 => 'Michael Recipient').segment3[14,20].should == 'Michael Recipient'.ljust(20)
     end
 
-    it 'should have a recipient address line 2' do
-      Factory.create_esr_payment(:recipient_address_line2 => 'Empfaengerstrasse 1').segment3[34,20].should == 'Empfaengerstrasse 1'.ljust(20)
+    it 'should have a beneficiary address line 2' do
+      Factory.create_esr_payment(:beneficiary_address_line2 => 'Empfaengerstrasse 1').segment3[34,20].should == 'Empfaengerstrasse 1'.ljust(20)
     end
 
-    it 'should have a recipient address line 3' do
-      Factory.create_esr_payment(:recipient_address_line3 => '8640 Rapperswil').segment3[54,20].should == '8640 Rapperswil'.ljust(20)
+    it 'should have a beneficiary address line 3' do
+      Factory.create_esr_payment(:beneficiary_address_line3 => '8640 Rapperswil').segment3[54,20].should == '8640 Rapperswil'.ljust(20)
     end
 
-    it 'should have a recipient address line 4' do
-      Factory.create_esr_payment(:recipient_address_line4 => 'Schweiz').segment3[74,20].should == 'Schweiz'.ljust(20)
+    it 'should have a beneficiary address line 4' do
+      Factory.create_esr_payment(:beneficiary_address_line4 => 'Schweiz').segment3[74,20].should == 'Schweiz'.ljust(20)
     end
     
-    describe 'ESR reference number with 9 figure recipient esr number' do
+    describe 'ESR reference number with 9 figure beneficiary esr number' do
       it 'should have an ESR reference number' do
         Factory.create_esr_payment(:beneficiarys_esr_party_number => '012127029',:reason_for_payment_esr_reference_number => '123456789012345678901234567').segment3[94,27].should == '123456789012345678901234567'
       end
@@ -109,7 +109,7 @@ describe 'ESRPayment' do
       end
     end
 
-    describe 'ESR reference number with 5 figure recipient esr number' do
+    describe 'ESR reference number with 5 figure beneficiary esr number' do
       it 'should have an ESR reference number justified left with blanks' do
         Factory.create_esr_payment(:beneficiarys_esr_party_number => '10304', :reason_for_payment_esr_reference_number => '012345678901234').segment3[94,27].should == '012345678901234'.ljust(27)
       end

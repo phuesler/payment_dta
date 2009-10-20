@@ -7,7 +7,7 @@ class Factory
   def self.create_esr_payment(attributes = {})
     default_attributes = {
       :requested_processing_date => Date.today.strftime('%y%m%d'),
-     :data_file_sender_identification => 'ÄÜ2',
+      :data_file_sender_identification => 'ÄÜ2',
       :output_sequence_number => 1,
       :payers_clearing_number => '254',
       :account_to_be_debited => '10235678',
@@ -27,6 +27,19 @@ class Factory
     }.merge(attributes)
     TotalRecord.new(default_attributes)
   end
+  
+  def self.create_domestic_chf_payment(attributes = {})
+    default_attributes = {
+      :requested_processing_date => Date.today.strftime('%y%m%d'),
+      :data_file_sender_identification => 'ÄÜ2',
+      :payment_amount_currency => 'CHF',
+      :issuer_identification => 'ABC01',
+      :transaction_number => rand(100000000000).to_s,
+      :output_sequence_number => 1,
+    }.merge(attributes)
+    DomesticCHFPayment.new(default_attributes)
+  end
+  
   class << self
     alias :create_total_record :create_total_payment
   end
