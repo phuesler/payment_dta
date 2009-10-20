@@ -158,4 +158,27 @@ describe DomesticCHFPayment do
       Factory.create_domestic_chf_payment.segment5.size.should == 128
     end
   end
+  
+  describe 'comparison' do
+    it 'should sort by execution date ascending' do
+      @record1 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091026")
+      @record2 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091027")
+      
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuer identification when the execution date is equal" do
+      @record1 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091026", :issuer_identification => "AAAAA")
+      @record2 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091026",:issuer_identification => "BBBBB")
+      
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuers clearing number when execution date and issuer identification are equal" do
+      @record1 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091026", :issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '253')
+      @record2 = Factory.create_domestic_chf_payment(:requested_processing_date  => "091026",:issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '254')
+      
+      (@record1 < @record2).should be_true
+    end
+  end
 end
