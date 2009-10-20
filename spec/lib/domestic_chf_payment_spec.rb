@@ -45,23 +45,23 @@ describe DomesticCHFPayment do
     end
     
     it 'should have an ordering partys address line 1' do
-      Factory.create_domestic_chf_payment(:ordering_partys_address_line1 => 'John Doe').segment2[2,20].should == 'John Doe'.ljust(20)
+      Factory.create_domestic_chf_payment(:ordering_partys_address_line1 => 'John Doe').segment2[2,24].should == 'John Doe'.ljust(24)
     end
 
     it 'should have an ordering partys address line 2' do
-      Factory.create_domestic_chf_payment(:ordering_partys_address_line2 => 'Bahnhofstrasse 1').segment2[22,20].should == 'Bahnhofstrasse 1'.ljust(20)      
+      Factory.create_domestic_chf_payment(:ordering_partys_address_line2 => 'Bahnhofstrasse 1').segment2[26,24].should == 'Bahnhofstrasse 1'.ljust(24)
     end
 
     it 'should have an ordering partys address line 3' do
-      Factory.create_domestic_chf_payment(:ordering_partys_address_line3 => '8000 Zurich').segment2[42,20].should == '8000 Zurich'.ljust(20)
+      Factory.create_domestic_chf_payment(:ordering_partys_address_line3 => '8000 Zurich').segment2[50,24].should == '8000 Zurich'.ljust(24)
     end
     
     it 'should have an ordering partys address line 4' do
-      Factory.create_domestic_chf_payment(:ordering_partys_address_line4 => 'Schweiz').segment2[62,20].should == 'Schweiz'.ljust(20)
+      Factory.create_domestic_chf_payment(:ordering_partys_address_line4 => 'Schweiz').segment2[74,24].should == 'Schweiz'.ljust(24)
     end
     
     it 'should have a reserve field' do
-      Factory.create_domestic_chf_payment.segment2[82,46].should == ''.ljust(46)
+      Factory.create_domestic_chf_payment.segment2[98,30].should == ''.ljust(30)
     end
     
     it 'should have a length of 128 characters' do

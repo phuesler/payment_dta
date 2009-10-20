@@ -99,10 +99,10 @@ module DTA
       end
       
       def payment_amount
-         payment_amount_valuta + payment_amount_currency + payment_amount_value
+         payment_amount_value_date + payment_amount_currency + payment_amount_value
       end
 
-     def payment_amount_valuta
+     def payment_amount_value_date
       ''.ljust(6)
      end
 
@@ -118,24 +118,44 @@ module DTA
       @data[:payment_amount].to_s.ljust(12)
      end
 
-     def ordering_partys_address
-      ordering_partys_address_line1 + ordering_partys_address_line2 + ordering_partys_address_line3 + ordering_partys_address_line4
+     def ordering_partys_address(line_size=24)
+      ordering_partys_address_line1(line_size) + ordering_partys_address_line2(line_size) + ordering_partys_address_line3(line_size) + ordering_partys_address_line4(line_size)
      end
 
-     def ordering_partys_address_line1
-       @data[:ordering_partys_address_line1].to_s.ljust(20)
+     def ordering_partys_address_line1(line_size = 24)
+       @data[:ordering_partys_address_line1].to_s.ljust(line_size)
      end
 
-     def ordering_partys_address_line2
-       @data[:ordering_partys_address_line2].to_s.ljust(20)
+     def ordering_partys_address_line2(line_size = 24)
+       @data[:ordering_partys_address_line2].to_s.ljust(line_size)
      end
 
-     def ordering_partys_address_line3
-       @data[:ordering_partys_address_line3].to_s.ljust(20)
+     def ordering_partys_address_line3(line_size = 24)
+       @data[:ordering_partys_address_line3].to_s.ljust(line_size)
      end
 
-     def ordering_partys_address_line4
-       @data[:ordering_partys_address_line4].to_s.ljust(20)
+     def ordering_partys_address_line4(line_size = 24)
+       @data[:ordering_partys_address_line4].to_s.ljust(line_size)
+     end
+     
+     def beneficiary_address(line_size=24)
+      beneficiary_address_line1(line_size) + beneficiary_address_line2(line_size) + beneficiary_address_line3(line_size) + beneficiary_address_line4(line_size)
+     end
+     
+     def beneficiary_address_line1(line_size=24)
+       @data[:beneficiary_address_line1].to_s.ljust(line_size)
+     end
+
+     def beneficiary_address_line2(line_size=24)
+       @data[:beneficiary_address_line2].to_s.ljust(line_size)
+     end
+
+     def beneficiary_address_line3(line_size=24)
+       @data[:beneficiary_address_line3].to_s.ljust(line_size)
+     end
+
+     def beneficiary_address_line4(line_size=24)
+       @data[:beneficiary_address_line4].to_s.ljust(line_size)
      end
 
       protected

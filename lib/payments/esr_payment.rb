@@ -15,27 +15,7 @@ class ESRPayment < DTA::Payments::Base
  def beneficiarys_esr_party_number
   "/C/#{@data[:beneficiarys_esr_party_number].to_s.rjust(9,'0')}"
  end
- 
- def beneficiary_address
-  beneficiary_address_line1 + beneficiary_address_line2 + beneficiary_address_line3 + beneficiary_address_line4
- end
- 
- def beneficiary_address_line1
-   @data[:beneficiary_address_line1].to_s.ljust(20)
- end
-
- def beneficiary_address_line2
-   @data[:beneficiary_address_line2].to_s.ljust(20)
- end
-
- def beneficiary_address_line3
-   @data[:beneficiary_address_line3].to_s.ljust(20)
- end
-
- def beneficiary_address_line4
-   @data[:beneficiary_address_line4].to_s.ljust(20)
- end
- 
+  
  def reason_for_payment_esr_reference_number
   if @data[:beneficiarys_esr_party_number].to_s.size == 5
     @data[:reason_for_payment_esr_reference_number].to_s.ljust(27)
@@ -55,10 +35,10 @@ class ESRPayment < DTA::Payments::Base
  end
  
  def build_segment2
-   super + ordering_partys_address + reserve_field(46)
+   super + ordering_partys_address(20) + reserve_field(46)
  end
  
  def build_segment3
-   super + beneficiarys_esr_party_number + beneficiary_address + reason_for_payment_esr_reference_number + beneficiarys_esr_party_number_check + reserve_field(5)
+   super + beneficiarys_esr_party_number + beneficiary_address(20) + reason_for_payment_esr_reference_number + beneficiarys_esr_party_number_check + reserve_field(5)
  end 
 end

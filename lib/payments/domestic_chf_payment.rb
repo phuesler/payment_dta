@@ -27,27 +27,7 @@ class DomesticCHFPayment < DTA::Payments::Base
   def beneficiarys_bank_account_number
     "/C/#{@data[:beneficiarys_bank_account_number]}".ljust(30)
   end
-  
-  def beneficiary_address
-   beneficiary_address_line1 + beneficiary_address_line2 + beneficiary_address_line3 + beneficiary_address_line4
-  end
-
-  def beneficiary_address_line1
-    @data[:beneficiary_address_line1].to_s.ljust(24)
-  end
-
-  def beneficiary_address_line2
-    @data[:beneficiary_address_line2].to_s.ljust(24)
-  end
-
-  def beneficiary_address_line3
-    @data[:beneficiary_address_line3].to_s.ljust(24)
-  end
-
-  def beneficiary_address_line4
-    @data[:beneficiary_address_line4].to_s.ljust(24)
-  end
-  
+    
   def reason_for_payment_message
     reason_for_payment_message_line1 + reason_for_payment_message_line2 + reason_for_payment_message_line3 + reason_for_payment_message_line4
   end
@@ -98,7 +78,7 @@ class DomesticCHFPayment < DTA::Payments::Base
   end
   
   def build_segment2
-     super + ordering_partys_address + reserve_field(46)
+     super + ordering_partys_address + reserve_field(30)
   end
   
   def build_segment3

@@ -40,6 +40,18 @@ class Factory
     DomesticCHFPayment.new(default_attributes)
   end
   
+  def self.create_financial_institution_payment(attributes = {})
+    default_attributes = {
+      :requested_processing_date => Date.today.strftime('%y%m%d'),
+      :data_file_sender_identification => 'ÄÜ2',
+      :payment_amount_currency => 'CHF',
+      :issuer_identification => 'ABC01',
+      :transaction_number => rand(100000000000).to_s,
+      :output_sequence_number => 1,
+      :identification_bank_address => 'A',
+    }.merge(attributes)
+    FinancialInstitutionPayment.new(default_attributes)
+  end
   class << self
     alias :create_total_record :create_total_payment
   end
