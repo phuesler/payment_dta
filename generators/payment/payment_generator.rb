@@ -8,7 +8,7 @@ class PaymentGenerator < RubiGen::Base
     super
     usage if args.empty?
     @name = args.shift
-    @class_name = @name.camelize
+    @class_name = "#{@name.camelize}Payment"
     @file_base_name = "#{@name.underscore}_payment"
     @model_dir = File.join('lib','payments')
     @spec_dir = File.join('spec','lib')

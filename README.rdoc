@@ -9,6 +9,7 @@ The documentation can be found here: http://www.six-interbank-clearing.com/dl_tk
 * Add validations
 * Implement the missing record types
 * Get an english version of the spec and document the code with it
+* Test generator with RSpec
 
 == Note on Patches/Pull Requests
  

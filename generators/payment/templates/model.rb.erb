@@ -2,6 +2,7 @@ require 'payments/base'
 require 'payment_sorting'
 
 class <%= class_name %> < DTA::Payments::Base
+  
   def record
     @record ||= segment1 + segment2 + segment3 + segment4 + segment5
   end
