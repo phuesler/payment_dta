@@ -12,6 +12,10 @@ class FinancialInstitutionPayment < DTA::Payments::Base
     '0'
   end
   
+  def requested_processing_date
+    '000000'
+  end
+  
   def payment_amount_value
    @data[:payment_amount].to_s.ljust(15)
   end
@@ -59,11 +63,7 @@ class FinancialInstitutionPayment < DTA::Payments::Base
   def beneficiary_institution_address_line4
    @data[:beneficiary_institution_address_line4].to_s.ljust(24)
   end
-  
-  def bank_payment_instructions
-    @data[:bank_payment_instructions].to_s.ljust(120)
-  end
-  
+    
   protected
 
   def build_segment1

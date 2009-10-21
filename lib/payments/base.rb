@@ -189,6 +189,10 @@ module DTA
       def reason_for_payment_message_line4(line_size=24)
        @data[:reason_for_payment_message_line4].to_s.ljust(line_size)
       end
+      
+      def bank_payment_instructions
+        @data[:bank_payment_instructions].to_s.ljust(120)
+      end
      
       protected
 

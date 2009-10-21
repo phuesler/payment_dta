@@ -168,19 +168,19 @@ describe FinancialInstitutionPayment do
       Factory.create_financial_institution_payment.segment5[0,2].should == '05'
     end
     
-    it "should have a reson for payment message line 1" do
+    it "should have a reason for payment message line 1" do
       Factory.create_financial_institution_payment(:reason_for_payment_message_line1 => 'LINE1').segment5[2,30].should == 'LINE1'.ljust(30)
     end
     
-    it "should have a reson for payment message line 2" do
+    it "should have a reason for payment message line 2" do
       Factory.create_financial_institution_payment(:reason_for_payment_message_line2 => 'LINE2').segment5[32,30].should == 'LINE2'.ljust(30)
     end
     
-    it "should have a reson for payment message line 3" do
+    it "should have a reason for payment message line 3" do
       Factory.create_financial_institution_payment(:reason_for_payment_message_line3 => 'LINE3').segment5[62,30].should == 'LINE3'.ljust(30)
     end
     
-    it "should have a reson for payment message line 4" do
+    it "should have a reason for payment message line 4" do
       Factory.create_financial_institution_payment(:reason_for_payment_message_line4 => 'LINE4').segment5[92,30].should == 'LINE4'.ljust(30)
     end
 
@@ -208,6 +208,22 @@ describe FinancialInstitutionPayment do
     
     it 'should have a length of 128 characters' do
       Factory.create_financial_institution_payment.segment6.size.should == 128
+    end
+  end
+  
+  describe 'comparison' do
+    it "should sort by issuer identification" do
+      @record1 = Factory.create_financial_institution_payment(:issuer_identification => "AAAAA")
+      @record2 = Factory.create_financial_institution_payment(:issuer_identification => "BBBBB")
+      
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuers clearing number when issuer identifications are equal" do
+      @record1 = Factory.create_financial_institution_payment( :issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '253')
+      @record2 = Factory.create_financial_institution_payment(:issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '254')
+      
+      (@record1 < @record2).should be_true
     end
   end
 end
