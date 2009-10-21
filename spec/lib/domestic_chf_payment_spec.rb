@@ -100,7 +100,7 @@ describe DomesticCHFPayment do
   end
     
   describe 'segment 4' do
-    it 'should set the segment field to 01' do
+    it 'should set the segment field to 04' do
       Factory.create_domestic_chf_payment.segment4[0,2].should == '04'
     end
 

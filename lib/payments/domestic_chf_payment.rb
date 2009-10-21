@@ -3,19 +3,7 @@ require 'payment_sorting'
 
 class DomesticCHFPayment < DTA::Payments::Base
   include DTA::Payment::Sortable
-  
-  def record
-    @record ||= segment1 + segment2 + segment3 + segment4 + segment5
-  end
-  
-  def segment4
-    @segment4 ||= build_segment4
-  end
-  
-  def segment5
-    @segment5 ||= build_segment5
-  end
-  
+    
   def transaction_type
     '827'
   end
@@ -26,26 +14,6 @@ class DomesticCHFPayment < DTA::Payments::Base
   
   def beneficiarys_bank_account_number
     "/C/#{@data[:beneficiarys_bank_account_number]}".ljust(30)
-  end
-    
-  def reason_for_payment_message
-    reason_for_payment_message_line1 + reason_for_payment_message_line2 + reason_for_payment_message_line3 + reason_for_payment_message_line4
-  end
-  
-  def reason_for_payment_message_line1
-    @data[:reason_for_payment_message_line1].to_s.ljust(28)
-  end
-
-  def reason_for_payment_message_line2
-    @data[:reason_for_payment_message_line2].to_s.ljust(28)
-  end
-
-  def reason_for_payment_message_line3
-    @data[:reason_for_payment_message_line3].to_s.ljust(28)
-  end
-
-  def reason_for_payment_message_line4
-    @data[:reason_for_payment_message_line4].to_s.ljust(28)
   end
   
   def end_beneficiary_address
@@ -86,10 +54,10 @@ class DomesticCHFPayment < DTA::Payments::Base
   end
   
   def build_segment4
-    '04' + reason_for_payment_message + reserve_field(14)
+    super + reason_for_payment_message(28) + reserve_field(14)
   end
   
   def build_segment5
-    '05' + end_beneficiarys_bank_account_number + end_beneficiary_address
+    super + end_beneficiarys_bank_account_number + end_beneficiary_address
   end
 end

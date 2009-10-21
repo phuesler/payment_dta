@@ -4,6 +4,10 @@ require 'payment_sorting'
 class ESRPayment < DTA::Payments::Base
  include DTA::Payment::Sortable
  
+ def record
+   @record ||= segment1 + segment2 + segment3
+ end
+ 
  def transaction_type
    '826'
  end
