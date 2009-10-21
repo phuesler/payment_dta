@@ -60,6 +60,10 @@ class FinancialInstitutionPayment < DTA::Payments::Base
    @data[:beneficiary_institution_address_line4].to_s.ljust(24)
   end
   
+  def bank_payment_instructions
+    @data[:bank_payment_instructions].to_s.ljust(120)
+  end
+  
   protected
 
   def build_segment1
@@ -80,5 +84,9 @@ class FinancialInstitutionPayment < DTA::Payments::Base
   
   def build_segment5
     super + reason_for_payment_message(30) + reserve_field(6)
+  end
+  
+  def build_segment6
+    super + bank_payment_instructions + reserve_field(6)
   end
 end

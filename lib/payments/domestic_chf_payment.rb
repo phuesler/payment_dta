@@ -3,6 +3,10 @@ require 'payment_sorting'
 
 class DomesticCHFPayment < DTA::Payments::Base
   include DTA::Payment::Sortable
+  
+  def record
+    @record ||= segment1 + segment2 + segment3 + segment4 + segment5
+  end
     
   def transaction_type
     '827'

@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'payments/esr_payment'
 
 describe 'ESRPayment' do
+  it "should have a total length of 384 characters" do
+    Factory.create_esr_payment.record.size.should == 384
+  end
+  
   describe ESRPayment, 'segment 1' do
     it 'should set the segment field to 01' do
       Factory.create_esr_payment.segment1[0,2].should == '01'

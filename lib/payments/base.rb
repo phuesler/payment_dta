@@ -33,9 +33,13 @@ module DTA
       def segment5
         @segment5 ||= build_segment5
       end
+
+      def segment6
+        @segment6 ||= build_segment6
+      end
       
       def record
-        @record ||= segment1 + segment2 + segment3 + segment4 + segment5
+        @record ||= segment1 + segment2 + segment3 + segment4 + segment5 + segment6
       end
 
       def header
@@ -206,6 +210,10 @@ module DTA
 
       def build_segment5
         '05'
+      end
+      
+      def build_segment6
+        '06'
       end
       
       def build_header

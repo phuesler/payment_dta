@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'payments/financial_institution_payment'
 
 describe FinancialInstitutionPayment do
+  
+  it "should have a total length of 768 characters" do
+    Factory.create_financial_institution_payment.record.size.should == 768
+  end
+  
   describe 'segment 1' do
     it 'should set the segment field to 01' do
       Factory.create_financial_institution_payment.segment1[0,2].should == '01'
@@ -185,6 +190,24 @@ describe FinancialInstitutionPayment do
     
     it 'should have a length of 128 characters' do
       Factory.create_financial_institution_payment.segment5.size.should == 128
+    end
+  end
+  
+  describe 'segment 6' do
+    it 'should set the segment field to 06' do
+      Factory.create_financial_institution_payment.segment6[0,2].should == '06'
+    end
+    
+    it "should have bank payment instructions" do
+      Factory.create_financial_institution_payment(:bank_payment_instructions => "CHG/OUR").segment6[2,120].should == 'CHG/OUR'.ljust(120)
+    end
+    
+    it 'should have a reserve field' do
+      Factory.create_financial_institution_payment.segment6[122,6].should == ' '.ljust(6)
+    end
+    
+    it 'should have a length of 128 characters' do
+      Factory.create_financial_institution_payment.segment6.size.should == 128
     end
   end
 end

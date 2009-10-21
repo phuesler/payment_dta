@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'payments/domestic_chf_payment'
 
 describe DomesticCHFPayment do
+  
+  it "should have a total length of 640 characters" do
+    Factory.create_domestic_chf_payment.record.size.should == 640
+  end
+  
   describe 'segment 1' do
     it 'should set the segment field to 01' do
       Factory.create_domestic_chf_payment.segment1[0,2].should == '01'
