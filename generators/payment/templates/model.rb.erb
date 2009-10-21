@@ -1,0 +1,38 @@
+require 'payments/base'
+require 'payment_sorting'
+
+class <%= class_name %> < DTA::Payments::Base
+  def record
+    @record ||= segment1 + segment2 + segment3 + segment4 + segment5
+  end
+
+  def transaction_type
+    '832'
+  end
+
+  def payment_type
+    '0'
+  end
+  
+  protected
+  
+  def build_segment1
+   super
+  end
+  
+  def build_segment2
+     super
+  end
+  
+  def build_segment3
+    super
+  end
+  
+  def build_segment4
+    super
+  end
+  
+  def build_segment5
+    super
+  end
+end

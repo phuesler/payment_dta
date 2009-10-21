@@ -1,0 +1,48 @@
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require '<%= File.join('payments',file_base_name)  %>'
+<% factory = "Factory.create_#{file_base_name}"  %>
+describe <%= class_name %> do
+  it "should have a total length of 640 characters" do
+    <%= factory %>.record.size.should == 640
+  end
+  
+<%- 1.upto(6) do |index| -%>
+  <%- payment = "#{factory}.segment#{index}" -%>
+  describe 'segment<%= index  %>' do
+    it 'should set the segment field to 0<%= index %>' do
+      <%= payment %>[0,2].should == '0<%= index %>'
+    end
+    
+    it 'should have a reserve field' do
+      <%= payment %>[114,11].should == ' '.ljust(11) 
+    end
+    
+    it 'should have a total length of 128 characters' do
+      <%= payment %>.size.should == 128
+    end
+  end
+<%- end -%>
+
+  describe 'comparison' do
+    it "should sort by execution date ascending" do
+      @record1 = <%= factory %>(:requested_processing_date  => "091026")
+      @record2 = <%= factory %>(:requested_processing_date  => "091027")
+    
+      (@record1 < @record2).should be_true
+    end
+    
+    it "should sort by issuer identification" do
+      @record1 = <%= factory %>(:issuer_identification => "AAAAA")
+      @record2 = <%= factory %>(:issuer_identification => "BBBBB")
+    
+      (@record1 < @record2).should be_true
+    end
+  
+    it "should sort by issuers clearing number when issuer identifications are equal" do
+      @record1 = <%= factory %>(:issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '253')
+      @record2 = <%= factory %>(:issuer_identification => "AAAAA", :ordering_party_bank_clearing_number => '254')
+    
+      (@record1 < @record2).should be_true
+    end
+  end
+end
