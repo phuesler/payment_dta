@@ -269,8 +269,7 @@ describe "dta character conversion and encoding" do
   describe 'DTA character encoding' do
     
     it "should have a default system encoding of utf8" do
-      utf8_string = "Ä"
-      utf8_string.size.should == 2
+      $KCODE.should == 'UTF8'
     end
     
     it "should convert the encoding from UTF8 to ISO Latincode 8859-1" do
