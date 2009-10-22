@@ -28,6 +28,16 @@ class Factory
     }.merge(attributes)
     FinancialInstitutionPayment.new(build_attributes(default_attributes))
   end
+
+  def self.create_special_financial_institution_payment(attributes = {})
+    default_attributes = {
+      :identification_bank_address => 'A',
+      :identification_purpose => 'I',
+      :purpose_structured_reference_number => 'i3or6cev1wog5ez5og8j',
+      :rule_of_charge => '2'
+    }.merge(attributes)
+    SpecialFinancialInstitutionPayment.new(build_attributes(default_attributes))
+  end
     
   def self.create_bank_cheque_payment(attributes = {})
     default_attributes = {

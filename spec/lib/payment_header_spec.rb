@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-%w(esr_payment domestic_chf_payment financial_institution_payment bank_cheque_payment iban_payment total_record).each do |payment_type|
+%w(esr_payment domestic_chf_payment financial_institution_payment bank_cheque_payment iban_payment special_financial_institution_payment total_record).each do |payment_type|
   require "payments/#{payment_type}"
 end
 
@@ -165,6 +165,34 @@ describe IBANPayment, 'header' do
 
   it 'should set the payment type to 1' do
    Factory.create_iban_payment.header[49,1].should == '1' 
+  end
+end
+
+describe SpecialFinancialInstitutionPayment, 'header' do
+  before(:each) do
+    @type = :special_financial_institution
+  end
+  
+  it_should_behave_like 'all headers'
+  
+  it 'should fill the requested processing date with zeros' do
+    Factory.create_special_financial_institution_payment.header[0,6].should == '000000'
+  end
+  
+  it 'should fill the beneficiarys bank clearing number with blanks' do
+    Factory.create_special_financial_institution_payment.header[6,12].should == ''.ljust(12,' ')
+  end
+  
+  it 'should set the ordering party bank clearing number' do
+    Factory.create_special_financial_institution_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+  end
+
+  it 'should should set the transaction type to 837' do
+   Factory.create_special_financial_institution_payment.header[46,3].should == '837' 
+  end
+
+  it 'should set the payment type to 1' do
+   Factory.create_special_financial_institution_payment.header[49,1].should == '1' 
   end
 end
 

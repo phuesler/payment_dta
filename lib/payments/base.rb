@@ -193,6 +193,62 @@ module DTA
       def bank_payment_instructions
         @data[:bank_payment_instructions].to_s.ljust(120)
       end
+      
+      def identification_bank_address
+        @data[:identification_bank_address].to_s
+      end
+
+      def beneficiary_bank_account_number
+        "/C/#{@data[:beneficiary_bank_account_number].to_s}".ljust(24)
+      end
+
+      def beneficiary_institution_bank_account_number
+        "/C/#{@data[:beneficiary_institution_bank_account_number]}".ljust(24)
+      end
+
+      def beneficiary_institution_address(line_size=24)
+        if identification_bank_address == 'A'
+          @data[:beneficiarys_institution_swift_address_].to_s.ljust(24) + ''.ljust(72)
+        else
+          beneficiary_institution_address_line1 + beneficiary_institution_address_line2 + beneficiary_institution_address_line3 + beneficiary_institution_address_line4
+        end
+      end
+
+      def beneficiary_institution_address_line1
+       @data[:beneficiary_institution_address_line1].to_s.ljust(24)
+      end
+
+      def beneficiary_institution_address_line2
+       @data[:beneficiary_institution_address_line2].to_s.ljust(24)
+      end
+
+      def beneficiary_institution_address_line3
+       @data[:beneficiary_institution_address_line3].to_s.ljust(24)
+      end
+
+      def beneficiary_institution_address_line4
+       @data[:beneficiary_institution_address_line4].to_s.ljust(24)
+      end
+      
+      def beneficiary_iban_number
+        @data[:beneficiary_iban_number].to_s.ljust(34)
+      end
+      
+      def identification_purpose
+        @data[:identification_purpose].to_s[0,1]
+      end
+
+      def purpose
+        if identification_purpose == 'I'
+          @data[:purpose_structured_reference_number].to_s.ljust(105)
+        else
+          @data[:purpose_line_1].to_s.ljust(35) + @data[:purpose_line_2].to_s.ljust(35) + @data[:purpose_line_3].to_s.ljust(35)
+        end
+      end
+
+      def rule_of_charge
+        @data[:rule_of_charge].to_s[0,1]
+      end
      
       protected
 

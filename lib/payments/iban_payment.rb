@@ -47,31 +47,11 @@ class IBANPayment < DTA::Payments::Base
       @data[:beneficiary_institution_address_line1].to_s.ljust(35) + @data[:beneficiary_institution_address_line2].to_s.ljust(35)
     end
   end
-  
-  def beneficiary_iban_number
-    @data[:beneficiary_iban_number].to_s.ljust(34)
-  end
-  
+    
   def beneficiary_address(line_size=35)
     beneficiary_address_line1(line_size) + beneficiary_address_line2(line_size) + beneficiary_address_line3(line_size)
   end
-  
-  def identification_purpose
-    @data[:identification_purpose].to_s[0,1]
-  end
-  
-  def purpose
-    if identification_purpose == 'I'
-      @data[:purpose_structured_reference_number].to_s.ljust(105)
-    else
-      @data[:purpose_line_1].to_s.ljust(35) + @data[:purpose_line_2].to_s.ljust(35) + @data[:purpose_line_3].to_s.ljust(35)
-    end
-  end
-  
-  def rule_of_charge
-    @data[:rule_of_charge].to_s[0,1]
-  end
-  
+    
   protected
   
   def build_segment1
