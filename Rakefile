@@ -4,13 +4,14 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "payment_dta_ch"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.name = "payment_dta"
+    gem.summary = "Ruby library to generate Swiss DTA payment files"
+    gem.description = "Generate Swiss DTA payment files to extract payments from your existing application"
     gem.email = "patrick.huesler@gmail.com"
-    gem.homepage = "http://github.com/phuesler/payment_dta_ch"
+    gem.homepage = "http://github.com/phuesler/payment_dta"
     gem.authors = ["Patrick Huesler"]
     gem.add_development_dependency "rspec"
+    gem.add_development_dependency "rubigen"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -43,7 +44,7 @@ Rake::RDocTask.new do |rdoc|
   end
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "payment_dta_ch #{version}"
+  rdoc.title = "payment_dta #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

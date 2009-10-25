@@ -1,15 +1,29 @@
-= payment_dta_ch
+= Swiss DTA payment file format
 
 Ruby library for the Swiss DTA payment file format. See http://www.six-interbank-clearing.com/de/tkicch_index/tkicch_home/tkicch_standardization/tkicch_standardization_dta.htm?lang=1 for more Information.
 
-The documentation can be found here: http://www.six-interbank-clearing.com/dl_tkicch_dta.pdf
+The DTA documentation in PDF format can be found here: http://www.six-interbank-clearing.com/dl_tkicch_dta.pdf
 
+== Installation
+
+  gem install payment_dta --source http://gemcutter.org
+
+== Usage
+
+  require 'payment_dta'
+  
+  DTAFile.create("/tmp/dta_payment.dta") do |file|
+    file << ESRPayment.new(esr_attributes)
+    file << IBANPayment.new(iban_attributes)
+  end
 
 == TODOS
 * Add validations
-* Implement the missing record types
-* Get an english version of the spec and document the code with it
-* Test generator with RSpec
+* Merge namespaces DTA::Payment and DTA::Payments
+* Remove duplications in payment classes
+* Document the code according to the English DTA spec
+* Add API to generate a string instead of a file so that it can be used in a web application
+* Move tests for generator from test unit to rspec
 
 == Note on Patches/Pull Requests
  
