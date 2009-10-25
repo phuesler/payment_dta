@@ -1,5 +1,5 @@
-require 'payments/base'
-require 'payment_sorting'
+require 'payment_dta/payments/base'
+require 'payment_dta/payment_sorting'
 
 class ESRPayment < DTA::Payments::Base
  include DTA::Payment::Sortable

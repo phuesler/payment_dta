@@ -1,5 +1,5 @@
-require 'payments/esr_payment'
-require 'payments/total_record'
+require 'payment_dta/payments/esr_payment'
+require 'payment_dta/payments/total_record'
 class Factory
   def self.create_payment(type, attributes = {})
     send("create_#{type.to_s}_payment",attributes)

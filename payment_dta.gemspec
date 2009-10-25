@@ -17,44 +17,27 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    ".document",
-     ".gitignore",
-     "LICENSE",
+    "LICENSE",
      "README.rdoc",
-     "Rakefile",
      "VERSION",
      "generators/payment/USAGE",
      "generators/payment/payment_generator.rb",
      "generators/payment/templates/model.rb.erb",
      "generators/payment/templates/spec.rb.erb",
-     "lib/character_conversion.rb",
-     "lib/dta_file.rb",
-     "lib/payment_sorting.rb",
-     "lib/payments/bank_cheque_payment.rb",
-     "lib/payments/base.rb",
-     "lib/payments/domestic_chf_payment.rb",
-     "lib/payments/esr_payment.rb",
-     "lib/payments/financial_institution_payment.rb",
-     "lib/payments/iban_payment.rb",
-     "lib/payments/special_financial_institution_payment.rb",
-     "lib/payments/total_record.rb",
+     "lib/payment_dta.rb",
+     "lib/payment_dta/character_conversion.rb",
+     "lib/payment_dta/dta_file.rb",
+     "lib/payment_dta/payment_sorting.rb",
+     "lib/payment_dta/payments/bank_cheque_payment.rb",
+     "lib/payment_dta/payments/base.rb",
+     "lib/payment_dta/payments/domestic_chf_payment.rb",
+     "lib/payment_dta/payments/esr_payment.rb",
+     "lib/payment_dta/payments/financial_institution_payment.rb",
+     "lib/payment_dta/payments/iban_payment.rb",
+     "lib/payment_dta/payments/special_financial_institution_payment.rb",
+     "lib/payment_dta/payments/total_record.rb",
      "script/destroy",
-     "script/generate",
-     "spec/factory.rb",
-     "spec/lib/bank_cheque_payment_spec.rb",
-     "spec/lib/character_conversion_spec.rb",
-     "spec/lib/domestic_chf_payment_spec.rb",
-     "spec/lib/dta_file_spec.rb",
-     "spec/lib/esr_payment_spec.rb",
-     "spec/lib/financial_institution_payment_spec.rb",
-     "spec/lib/iban_payment_spec.rb",
-     "spec/lib/payment_header_spec.rb",
-     "spec/lib/payment_spec.rb",
-     "spec/lib/special_financial_institution_payment_spec.rb",
-     "spec/lib/total_record_spec.rb",
-     "spec/spec_helper.rb",
-     "test/test_generator_helper.rb",
-     "test/test_payment_generator.rb"
+     "script/generate"
   ]
   s.homepage = %q{http://github.com/phuesler/payment_dta}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -74,9 +57,7 @@ Gem::Specification.new do |s|
      "spec/lib/payment_spec.rb",
      "spec/lib/special_financial_institution_payment_spec.rb",
      "spec/lib/total_record_spec.rb",
-     "spec/spec_helper.rb",
-     "test/test_generator_helper.rb",
-     "test/test_payment_generator.rb"
+     "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then

@@ -1,4 +1,4 @@
-require 'payments/base'
+require 'payment_dta/payments/base'
 
 class TotalRecord < DTA::Payments::Base
   def segment1

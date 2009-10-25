@@ -4,12 +4,16 @@ Ruby library for the Swiss DTA payment file format. See http://www.six-interbank
 
 The DTA documentation in PDF format can be found here: http://www.six-interbank-clearing.com/dl_tkicch_dta.pdf
 
+== Status
+
+Early alpha. All payments are supported. It lacks payment validations and extended documentation
+
 == Installation
 
   gem install payment_dta --source http://gemcutter.org
 
 == Usage
-
+  require 'rubygems'
   require 'payment_dta'
   
   DTAFile.create("/tmp/dta_payment.dta") do |file|

@@ -1,5 +1,5 @@
 require 'date'
-require 'character_conversion'
+require 'payment_dta/character_conversion'
 
 module DTA
   module Payments

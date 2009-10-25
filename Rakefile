@@ -10,6 +10,17 @@ begin
     gem.email = "patrick.huesler@gmail.com"
     gem.homepage = "http://github.com/phuesler/payment_dta"
     gem.authors = ["Patrick Huesler"]
+    gem.files = FileList[
+      "lib/**/*.rb",
+      "generators/**/*",
+      "LICENSE",
+      "README.rdoc",
+      "VERSION",
+      "script/*"
+    ]
+    gem.test_files = FileList[
+      "spec/**/*.rb"
+    ]
     gem.add_development_dependency "rspec"
     gem.add_development_dependency "rubigen"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
