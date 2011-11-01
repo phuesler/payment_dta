@@ -5,17 +5,17 @@ module DTA
   module Payments
     class Base
       include DTA::CharacterConversion
-      
+
       def initialize(data = {})
         @data = data
       end
-      
+
       def to_dta
         dta_string(record)
       end
 
       def segment1
-        @segment1 ||= build_segment1 
+        @segment1 ||= build_segment1
       end
 
       def segment2
@@ -25,7 +25,7 @@ module DTA
       def segment3
         @segment3 ||= build_segment3
       end
-      
+
       def segment4
         @segment4 ||= build_segment4
       end
@@ -37,7 +37,7 @@ module DTA
       def segment6
         @segment6 ||= build_segment6
       end
-      
+
       def record
         @record ||= segment1 + segment2 + segment3 + segment4 + segment5 + segment6
       end
@@ -45,7 +45,7 @@ module DTA
       def header
         @header ||= build_header
       end
-      
+
       def requested_processing_date
         @data[:requested_processing_date].to_s
       end
@@ -57,7 +57,7 @@ module DTA
       def output_sequence_number
         @output_sequence_number.to_s.rjust(5,'0')
       end
-      
+
       def output_sequence_number=(output_sequence_number)
         @output_sequence_number = output_sequence_number
       end
@@ -67,7 +67,7 @@ module DTA
       end
 
       def ordering_party_bank_clearing_number
-        @data[:ordering_party_bank_clearing_number].to_s.ljust(7,'0')
+        @data[:ordering_party_bank_clearing_number].to_s.ljust(7,' ')
       end
 
       def data_file_sender_identification
@@ -105,11 +105,11 @@ module DTA
       def reference_number
         issuer_identification + transaction_number
       end
-      
+
       def account_to_be_debited
         @data[:account_to_be_debited].to_s.ljust(24)
       end
-      
+
       def payment_amount
         payment_amount_value_date + payment_amount_currency + payment_amount_value
       end
@@ -189,11 +189,11 @@ module DTA
       def reason_for_payment_message_line4(line_size=24)
         @data[:reason_for_payment_message_line4].to_s.ljust(line_size)
       end
-      
+
       def bank_payment_instructions
         @data[:bank_payment_instructions].to_s.ljust(120)
       end
-      
+
       def identification_bank_address
         @data[:identification_bank_address].to_s
       end
@@ -229,11 +229,11 @@ module DTA
       def beneficiary_institution_address_line4
        @data[:beneficiary_institution_address_line4].to_s.ljust(24)
       end
-      
+
       def beneficiary_iban_number
         @data[:beneficiary_iban_number].to_s.ljust(34)
       end
-      
+
       def identification_purpose
         @data[:identification_purpose].to_s[0,1]
       end
@@ -249,7 +249,7 @@ module DTA
       def rule_of_charge
         @data[:rule_of_charge].to_s[0,1]
       end
-     
+
       protected
 
       def build_segment1
@@ -263,7 +263,7 @@ module DTA
       def build_segment3
         '03'
       end
-      
+
       def build_segment4
         '04'
       end
@@ -271,18 +271,18 @@ module DTA
       def build_segment5
         '05'
       end
-      
+
       def build_segment6
         '06'
       end
-      
+
       def build_header
-        requested_processing_date + beneficiary_bank_clearing_number + output_sequence_number + creation_date + ordering_party_bank_clearing_number + data_file_sender_identification + entry_sequence_number + transaction_type + payment_type + processing_flag    
+        requested_processing_date + beneficiary_bank_clearing_number + output_sequence_number + creation_date + ordering_party_bank_clearing_number + data_file_sender_identification + entry_sequence_number + transaction_type + payment_type + processing_flag
       end
-      
+
       def reserve_field(length = 14)
        ''.ljust(length)
       end
-    end 
+    end
   end
 end
