@@ -45,7 +45,7 @@ describe ESRPayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_esr_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_esr_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 826' do
@@ -72,7 +72,7 @@ describe DomesticCHFPayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_domestic_chf_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_domestic_chf_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 827' do
@@ -100,7 +100,7 @@ describe FinancialInstitutionPayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_financial_institution_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_financial_institution_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 830' do
@@ -128,7 +128,7 @@ describe BankChequePayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_bank_cheque_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_bank_cheque_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 832' do
@@ -156,7 +156,7 @@ describe IBANPayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_iban_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_iban_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 836' do
@@ -184,7 +184,7 @@ describe SpecialFinancialInstitutionPayment, 'header' do
   end
 
   it 'should set the ordering party bank clearing number' do
-    Factory.create_special_financial_institution_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '2540000'
+    Factory.create_special_financial_institution_payment(:ordering_party_bank_clearing_number => '254').header[29,7].should == '254    '
   end
 
   it 'should should set the transaction type to 837' do

@@ -67,7 +67,7 @@ module DTA
       end
 
       def ordering_party_bank_clearing_number
-        @data[:ordering_party_bank_clearing_number].to_s.ljust(7,'0')
+        @data[:ordering_party_bank_clearing_number].to_s.ljust(7,' ')
       end
 
       def data_file_sender_identification
