@@ -250,7 +250,7 @@ describe "dta character conversion and encoding" do
   end
   
   it "should encode the strings" do
-    Converter.should_receive(:encode_characters).with("AEoeue").and_return(Iconv.conv("ISO-8859-1", "UTF8","Äöü"))
+    Converter.should_receive(:encode_characters).with("AEoeue").and_return("Äöü".encode('iso-8859-1'))
     Converter.dta_string("Äöü")
   end
   

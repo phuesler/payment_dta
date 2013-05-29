@@ -1,4 +1,3 @@
-require 'iconv'
 module DTA
   module CharacterConversion
     CONVERSION_MAP_UTF8 = {
@@ -241,7 +240,7 @@ module DTA
     end
     
     def encode_characters(string)
-      Iconv.conv("ISO-8859-1", "UTF8",string)
+      string.encode('iso-8859-1')
     end
     
     def dta_string(string)
