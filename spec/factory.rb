@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'payment_dta/payments/esr_payment'
 require 'payment_dta/payments/total_record'
 class Factory
@@ -58,7 +59,7 @@ class Factory
   
   def self.create_total_payment(attributes = {})
     default_attributes = {
-      :data_file_sender_identification => 'ÄÜ2',
+      :data_file_sender_identification => 'PAYDT',
       :total_amount => 233.451,
     }.merge(attributes)
     TotalRecord.new(default_attributes)
@@ -71,7 +72,7 @@ class Factory
   
   def self.build_attributes(attributes = {})
     {
-      :data_file_sender_identification => 'ÄÜ2',
+      :data_file_sender_identification => 'PAYDT',
       :payment_amount_currency         => 'CHF',
       :issuer_identification           => 'ABC01',
       :transaction_number              => rand(100000000000).to_s,
