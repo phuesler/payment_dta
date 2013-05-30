@@ -28,6 +28,10 @@ class DTAFile
     recalculate_output_sequence_numbers
   end
 
+  def dta_string
+    (@records.map(&:to_dta) << build_total_record.to_dta) * "\n" << "\n"
+  end
+
   def self.create(path)
     dta_file = self.new(path)
     yield dta_file
