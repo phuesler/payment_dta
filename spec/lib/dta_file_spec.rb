@@ -55,6 +55,12 @@ describe DTAFile do
     it "should add a total record" do
       @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).to_dta)
     end
+
+    describe '#dta_string' do
+      it 'equals file contents' do
+        @dta_file.dta_string.size.should == IO.read(@path).size
+      end
+    end
   end
   
   describe DTAFile, "record sorting" do
