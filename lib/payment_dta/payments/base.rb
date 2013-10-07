@@ -55,11 +55,7 @@ module DTA
       end
 
       def output_sequence_number
-        @output_sequence_number.to_s.rjust(5,'0')
-      end
-
-      def output_sequence_number=(output_sequence_number)
-        @output_sequence_number = output_sequence_number
+        '00000'
       end
 
       def creation_date
@@ -80,6 +76,10 @@ module DTA
 
       def entry_sequence_number
         @data[:entry_sequence_number].to_s.rjust(5,'0')
+      end
+
+      def entry_sequence_number=(entry_sequence_number)
+        @data[:entry_sequence_number] = entry_sequence_number
       end
 
       def payment_type

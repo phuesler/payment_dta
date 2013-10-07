@@ -25,7 +25,7 @@ class DTAFile
   def <<(record)
     record.transaction_number = @transaction_number
     @records << record
-    recalculate_output_sequence_numbers
+    recalculate_entry_sequence_numbers
   end
 
   def dta_string
@@ -40,11 +40,11 @@ class DTAFile
   end
   
   private
-  
-  def recalculate_output_sequence_numbers
+
+  def recalculate_entry_sequence_numbers
     start = 1
     @records.each do |record|
-      record.output_sequence_number = start
+      record.entry_sequence_number = start
       start += 1
     end
   end
