@@ -25,8 +25,8 @@ describe DTAFile do
     file << Factory.create_esr_payment
     file << Factory.create_esr_payment
 
-    file.records.to_a.first.output_sequence_number.should == "00001"
-    file.records.to_a[1].output_sequence_number.should == "00002"
+    file.records.to_a.first.entry_sequence_number.should == "00001"
+    file.records.to_a[1].entry_sequence_number.should == "00002"
   end
   
   it "should calculate the total amount" do

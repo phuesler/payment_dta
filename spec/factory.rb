@@ -76,7 +76,7 @@ class Factory
       :payment_amount_currency         => 'CHF',
       :issuer_identification           => 'ABC01',
       :transaction_number              => rand(100000000000).to_s,
-      :output_sequence_number          => 1,
+      :output_sequence_number          => 0,
       :payment_amount_value_date => Date.today.strftime('%y%m%d')
     }.merge(attributes)
   end
