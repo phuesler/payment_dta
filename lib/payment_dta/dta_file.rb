@@ -52,6 +52,7 @@ class DTAFile
   def build_total_record
     TotalRecord.new(
       :total_amount => total,
+      :entry_sequence_number => @records.count + 1,
       :data_file_sender_identification => @records.first.data_file_sender_identification
     )
   end

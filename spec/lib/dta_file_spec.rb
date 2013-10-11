@@ -53,7 +53,8 @@ describe DTAFile do
     end
     
     it "should add a total record" do
-      @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).to_dta)
+      @file_records.last.should include(Factory.create_total_record(
+        :entry_sequence_number => 3, :total_amount => 6666.66).to_dta)
     end
 
     describe '#dta_string' do
