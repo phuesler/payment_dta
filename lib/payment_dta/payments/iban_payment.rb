@@ -25,7 +25,7 @@ class IBANPayment < DTA::Payments::Base
   end
   
   def payment_amount_value
-  @data[:payment_amount].to_s.ljust(15)
+    super(15)
   end
   
   def convertion_rate

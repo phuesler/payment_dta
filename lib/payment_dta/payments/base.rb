@@ -126,8 +126,8 @@ module DTA
         @data[:payment_amount]
       end
 
-      def payment_amount_value
-        @data[:payment_amount].to_s.ljust(12).gsub('.', ',')
+      def payment_amount_value(size=12)
+        @data[:payment_amount].to_s.ljust(size).gsub('.', ',')
       end
 
       def ordering_partys_address(line_size=24)
