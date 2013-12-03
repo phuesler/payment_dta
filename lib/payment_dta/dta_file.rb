@@ -1,4 +1,5 @@
 require 'set'
+require 'payment_dta/character_conversion_hash'
 require 'payment_dta/payments/total_record'
 class DTAFile
   attr_reader :records

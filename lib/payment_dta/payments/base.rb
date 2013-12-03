@@ -7,7 +7,7 @@ module DTA
       include DTA::CharacterConversion
 
       def initialize(data = {})
-        @data = data
+        @data = CharacterConversionHash[data]
       end
 
       def to_dta

@@ -64,6 +64,11 @@ describe IBANPayment do
       Factory.create_iban_payment(:ordering_partys_address_line3 => '8000 Zurich').segment2[84,35].should == '8000 Zurich'.ljust(35)
     end
     
+    it 'should have the correct length when containing umlauts' do
+      Factory.create_iban_payment(:ordering_partys_address_line3 => '8000 Zürich').
+        segment2[84,35].should == '8000 Zuerich'.ljust(35)
+    end
+
     it 'should have a reserve field' do
       Factory.create_iban_payment.segment2[114,9].should == ' '.ljust(9) 
     end
