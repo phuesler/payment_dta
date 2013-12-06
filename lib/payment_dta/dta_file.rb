@@ -1,4 +1,5 @@
 require 'set'
+require 'bigdecimal'
 require 'payment_dta/character_conversion_hash'
 require 'payment_dta/payments/total_record'
 class DTAFile
@@ -19,7 +20,7 @@ class DTAFile
   
   def total
     @records.inject(0) do |sum, record|
-      sum + record.amount.to_f
+      sum + BigDecimal.new(record.amount, 16)
     end
   end
   

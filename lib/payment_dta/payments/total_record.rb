@@ -10,7 +10,8 @@ class TotalRecord < DTA::Payments::Base
   end
   
   def total_amount
-    @data[:total_amount].to_s.gsub(/\./,',').ljust(16)
+    BigDecimal.new(@data[:total_amount], 16).round(3).to_s('F').
+      gsub(/\./,',').ljust(16)
   end
   
   def ordering_party_bank_clearing_number
