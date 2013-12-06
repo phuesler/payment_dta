@@ -36,6 +36,12 @@ describe DTAFile do
     file.total.should == (420.50 + 320.20)
   end
   
+  it 'should correctly sum up floats' do
+    file = DTAFile.new nil
+    3.times { file << Factory.create_esr_payment(:payment_amount => 0.1) }
+    file.total.should eq 0.3
+  end
+
   describe DTAFile, "file records" do
     before(:each) do
       @record1 = Factory.create_esr_payment(:payment_amount => 2222.22)
