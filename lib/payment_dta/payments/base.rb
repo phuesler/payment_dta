@@ -155,19 +155,19 @@ module DTA
       end
 
       def beneficiary_address_line1(line_size=24)
-        @data[:beneficiary_address_line1].to_s.ljust(line_size)
+        @data[:beneficiary_address_line1].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line2(line_size=24)
-        @data[:beneficiary_address_line2].to_s.ljust(line_size)
+        @data[:beneficiary_address_line2].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line3(line_size=24)
-        @data[:beneficiary_address_line3].to_s.ljust(line_size)
+        @data[:beneficiary_address_line3].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line4(line_size=24)
-        @data[:beneficiary_address_line4].to_s.ljust(line_size)
+        @data[:beneficiary_address_line4].to_s.ljust(line_size)[0, line_size]
       end
 
       def reason_for_payment_message(line_size=24)

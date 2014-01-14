@@ -129,6 +129,12 @@ describe IBANPayment do
       Factory.create_iban_payment(:beneficiary_address_line1 => 'Michael Recipient').segment4[2,35].should == 'Michael Recipient'.ljust(35)
     end
 
+    it 'should truncate input longer than 35 characters' do
+      name = 'Joannes Chrysostomus Wolfgangus Theophilus Mozart'
+      Factory.create_iban_payment(:beneficiary_address_line1 => name).
+        beneficiary_address_line1(35).should == name[0, 35]
+    end
+
     it 'should have a beneficiary address line 2' do
       Factory.create_iban_payment(:beneficiary_address_line2 => 'Empfaengerstrasse 1').segment4[37,35].should == 'Empfaengerstrasse 1'.ljust(35)
     end
