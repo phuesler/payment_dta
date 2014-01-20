@@ -6,7 +6,6 @@ require 'payment_dta/version'
 Gem::Specification.new do |spec|
   spec.name = "payment_dta"
   spec.version       = DTA::VERSION
-  spec.version = "1.0.0"
   spec.require_paths = ["lib"]
   spec.authors = ["Patrick Huesler"]
   spec.description = "Generate Swiss DTA payment files to extract payments from your existing application"
