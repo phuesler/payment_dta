@@ -1,14 +1,15 @@
 require 'rubygems'
 require 'bundler/gem_tasks'
+require 'rake'
+require 'rdoc/task'
 require 'rspec/core/rake_task'
-
 RSpec::Core::RakeTask.new(:spec) do |spec|
 end
 
 task :default => :spec
 
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
+
+RDoc::Task.new do |rdoc|
   if File.exist?('VERSION')
     version = File.read('VERSION')
   else

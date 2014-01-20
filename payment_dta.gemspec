@@ -19,8 +19,9 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($/)
   spec.homepage = "http://github.com/phuesler/payment_dta"
 
-  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency "bundler", "~> 1.2"
   spec.add_development_dependency "rubigen"
+  spec.add_development_dependency "rdoc"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "rake"
