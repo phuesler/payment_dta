@@ -4,3 +4,17 @@
 
 * Discontinue support for Ruby 1.8
 * Support for Ruby 1.9.x and Ruby 2.0
+* Move to bundler
+* Run tests on travis.ci
+* fix issue #2 (calculate entry_sequence_number) (gewo)
+* use swift convention for amount formatting (gewo)
+* use BigDecimal for calculating the TotalRecord sum to prevent rounding
+errors (gewo)
+* truncate long input for beneficiary_address_line[1-4] (gewo)
+* convert characters in the @data-hash getter, before building the final
+record to get the correct record-lengths (gewo)
+
+### Contributors
+
+ * [gewo](https://github.com/gewo)
+ * [senny](https://github.com/senny)
