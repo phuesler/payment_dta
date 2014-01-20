@@ -4,26 +4,26 @@ require 'payment_dta/character_conversion_hash'
 require 'payment_dta/payments/total_record'
 class DTAFile
   attr_reader :records
-  
+
   def initialize(path, transaction_number = rand(100000000000).to_s)
     @transaction_number = transaction_number.to_s
     @path = path
     @records = SortedSet.new
   end
-  
+
   def write_file
     File.open(@path,"w") do |file|
       @records.each{|record| file.puts record.to_dta}
       file.puts build_total_record.to_dta
     end
   end
-  
+
   def total
     @records.inject(0) do |sum, record|
-      sum + BigDecimal.new(record.amount, 16)
+      sum + BigDecimal.new(record.amount.to_s, 16)
     end
   end
-  
+
   def <<(record)
     record.transaction_number = @transaction_number
     @records << record
@@ -40,7 +40,7 @@ class DTAFile
     dta_file.write_file
     dta_file
   end
-  
+
   private
 
   def recalculate_entry_sequence_numbers
@@ -50,7 +50,7 @@ class DTAFile
       start += 1
     end
   end
-  
+
   def build_total_record
     TotalRecord.new(
       :total_amount => total,
