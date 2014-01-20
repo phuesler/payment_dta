@@ -6,3 +6,4 @@ pkg
 *.tmproj
 tmp/*.dta
 .bundle
+Gemfile.lock
