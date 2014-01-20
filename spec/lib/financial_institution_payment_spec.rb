@@ -33,7 +33,7 @@ describe FinancialInstitutionPayment do
     end
     
     it 'should have a payment amount justified left filled with blanks' do
-      Factory.create_financial_institution_payment(:payment_amount => '3949.75').segment1[102,15].should == '3949.75'.ljust(15)
+      Factory.create_financial_institution_payment(:payment_amount => '3949.75').segment1[102,15].should == '3949,75'.ljust(15)
     end
     
     it 'should have a reserve field' do

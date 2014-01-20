@@ -33,7 +33,12 @@ describe DomesticCHFPayment do
     end
     
     it 'should have a payment amount justified left filled with blanks' do
-      Factory.create_domestic_chf_payment(:payment_amount => '3949.75').segment1[102,12].should == '3949.75     '
+      Factory.create_domestic_chf_payment(:payment_amount => '3949,75').segment1[102,12].should == '3949,75     '
+    end
+
+    it 'should use the swift convention to format the amount' do
+      Factory.create_domestic_chf_payment(:payment_amount => '110.45').segment1[102,12].should == '110,45      '
+      Factory.create_domestic_chf_payment(:payment_amount => 237.05).segment1[102,12].should == '237,05      '
     end
     
     it 'should have a reserve field' do

@@ -1,4 +1,3 @@
-require 'iconv'
 module DTA
   module CharacterConversion
     CONVERSION_MAP_UTF8 = {
@@ -230,7 +229,7 @@ module DTA
     def map_characters(string)
       new_string = ""
       string.each_char do |character|
-        code = character.size == 1 ? character[0] : "#{character[0]}#{character[1]}".to_i
+        code = character.bytes.to_a.join('').to_i
         if CONVERSION_MAP_UTF8.has_key?(code)
           new_string << CONVERSION_MAP_UTF8[code][:convert_to]
         else
@@ -241,7 +240,7 @@ module DTA
     end
     
     def encode_characters(string)
-      Iconv.conv("ISO-8859-1", "UTF8",string)
+      string.encode('iso-8859-1')
     end
     
     def dta_string(string)

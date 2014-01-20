@@ -25,8 +25,8 @@ describe DTAFile do
     file << Factory.create_esr_payment
     file << Factory.create_esr_payment
 
-    file.records.to_a.first.output_sequence_number.should == "00001"
-    file.records.to_a[1].output_sequence_number.should == "00002"
+    file.records.to_a.first.entry_sequence_number.should == "00001"
+    file.records.to_a[1].entry_sequence_number.should == "00002"
   end
   
   it "should calculate the total amount" do
@@ -36,6 +36,12 @@ describe DTAFile do
     file.total.should == (420.50 + 320.20)
   end
   
+  it 'should correctly sum up floats' do
+    file = DTAFile.new nil
+    3.times { file << Factory.create_esr_payment(:payment_amount => 0.1) }
+    file.total.should eq 0.3
+  end
+
   describe DTAFile, "file records" do
     before(:each) do
       @record1 = Factory.create_esr_payment(:payment_amount => 2222.22)
@@ -53,7 +59,14 @@ describe DTAFile do
     end
     
     it "should add a total record" do
-      @file_records.last.should include(Factory.create_total_record(:total_amount => 6666.66).to_dta)
+      @file_records.last.should include(Factory.create_total_record(
+        :entry_sequence_number => 3, :total_amount => 6666.66).to_dta)
+    end
+
+    describe '#dta_string' do
+      it 'equals file contents' do
+        @dta_file.dta_string.size.should == IO.read(@path).size
+      end
     end
   end
   

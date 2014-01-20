@@ -1,3 +1,4 @@
+# coding: utf-8
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'character_conversion'
 
@@ -237,7 +238,7 @@ def create_character_from_ut8_decimal_code(code)
   if code < 128
     code.chr
   else
-    [code.to_s[0,3].to_i,code.to_s[3,3].to_i].pack("C*")
+    [code.to_s[0,3].to_i,code.to_s[3,3].to_i].pack("C*").force_encoding('utf-8')
   end
 end
 describe "dta character conversion and encoding" do
@@ -249,7 +250,7 @@ describe "dta character conversion and encoding" do
   end
   
   it "should encode the strings" do
-    Converter.should_receive(:encode_characters).with("AEoeue").and_return(Iconv.conv("ISO-8859-1", "UTF8","Äöü"))
+    Converter.should_receive(:encode_characters).with("AEoeue").and_return("Äöü".encode('iso-8859-1'))
     Converter.dta_string("Äöü")
   end
   
@@ -267,14 +268,9 @@ describe "dta character conversion and encoding" do
   end
     
   describe 'DTA character encoding' do
-    
-    it "should have a default system encoding of utf8" do
-      $KCODE.should == 'UTF8'
-    end
-    
     it "should convert the encoding from UTF8 to ISO Latincode 8859-1" do
       encoded_string = Converter.encode_characters("Ä")
-      encoded_string.size.should == 1
+      encoded_string.bytes.to_a.size.should == 1
     end
   end
 end

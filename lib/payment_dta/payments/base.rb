@@ -7,7 +7,7 @@ module DTA
       include DTA::CharacterConversion
 
       def initialize(data = {})
-        @data = data
+        @data = CharacterConversionHash[data]
       end
 
       def to_dta
@@ -55,11 +55,7 @@ module DTA
       end
 
       def output_sequence_number
-        @output_sequence_number.to_s.rjust(5,'0')
-      end
-
-      def output_sequence_number=(output_sequence_number)
-        @output_sequence_number = output_sequence_number
+        '00000'
       end
 
       def creation_date
@@ -80,6 +76,10 @@ module DTA
 
       def entry_sequence_number
         @data[:entry_sequence_number].to_s.rjust(5,'0')
+      end
+
+      def entry_sequence_number=(entry_sequence_number)
+        @data[:entry_sequence_number] = entry_sequence_number
       end
 
       def payment_type
@@ -126,8 +126,8 @@ module DTA
         @data[:payment_amount]
       end
 
-      def payment_amount_value
-        @data[:payment_amount].to_s.ljust(12)
+      def payment_amount_value(size=12)
+        @data[:payment_amount].to_s.ljust(size).gsub('.', ',')
       end
 
       def ordering_partys_address(line_size=24)
@@ -155,19 +155,19 @@ module DTA
       end
 
       def beneficiary_address_line1(line_size=24)
-        @data[:beneficiary_address_line1].to_s.ljust(line_size)
+        @data[:beneficiary_address_line1].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line2(line_size=24)
-        @data[:beneficiary_address_line2].to_s.ljust(line_size)
+        @data[:beneficiary_address_line2].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line3(line_size=24)
-        @data[:beneficiary_address_line3].to_s.ljust(line_size)
+        @data[:beneficiary_address_line3].to_s.ljust(line_size)[0, line_size]
       end
 
       def beneficiary_address_line4(line_size=24)
-        @data[:beneficiary_address_line4].to_s.ljust(line_size)
+        @data[:beneficiary_address_line4].to_s.ljust(line_size)[0, line_size]
       end
 
       def reason_for_payment_message(line_size=24)

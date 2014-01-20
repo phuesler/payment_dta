@@ -32,7 +32,7 @@ describe IBANPayment do
     end
     
     it 'should have a payment amount justified left filled with blanks' do
-      Factory.create_iban_payment(:payment_amount => '3949.75').segment1[102,15].should == '3949.75'.ljust(15)
+      Factory.create_iban_payment(:payment_amount => '3949.75').segment1[102,15].should == '3949,75'.ljust(15)
     end
     
     it 'should have a reserve field' do
@@ -64,6 +64,11 @@ describe IBANPayment do
       Factory.create_iban_payment(:ordering_partys_address_line3 => '8000 Zurich').segment2[84,35].should == '8000 Zurich'.ljust(35)
     end
     
+    it 'should have the correct length when containing umlauts' do
+      Factory.create_iban_payment(:ordering_partys_address_line3 => '8000 Zürich').
+        segment2[84,35].should == '8000 Zuerich'.ljust(35)
+    end
+
     it 'should have a reserve field' do
       Factory.create_iban_payment.segment2[114,9].should == ' '.ljust(9) 
     end
@@ -122,6 +127,12 @@ describe IBANPayment do
     
     it 'should have a  address line 1' do
       Factory.create_iban_payment(:beneficiary_address_line1 => 'Michael Recipient').segment4[2,35].should == 'Michael Recipient'.ljust(35)
+    end
+
+    it 'should truncate input longer than 35 characters' do
+      name = 'Joannes Chrysostomus Wolfgangus Theophilus Mozart'
+      Factory.create_iban_payment(:beneficiary_address_line1 => name).
+        beneficiary_address_line1(35).should == name[0, 35]
     end
 
     it 'should have a beneficiary address line 2' do

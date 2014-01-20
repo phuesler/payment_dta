@@ -32,7 +32,7 @@ describe 'ESRPayment' do
     end
     
     it 'should have a payment amount justified left filled with blanks' do
-      Factory.create_esr_payment(:payment_amount => '3949.75').segment1[102,12].should == '3949.75     '
+      Factory.create_esr_payment(:payment_amount => '3949.75').segment1[102,12].should == '3949,75     '
     end
     
     it 'should have a reserve field' do

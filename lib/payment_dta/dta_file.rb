@@ -1,4 +1,6 @@
 require 'set'
+require 'bigdecimal'
+require 'payment_dta/character_conversion_hash'
 require 'payment_dta/payments/total_record'
 class DTAFile
   attr_reader :records
@@ -18,14 +20,18 @@ class DTAFile
   
   def total
     @records.inject(0) do |sum, record|
-      sum + record.amount.to_f
+      sum + BigDecimal.new(record.amount, 16)
     end
   end
   
   def <<(record)
     record.transaction_number = @transaction_number
     @records << record
-    recalculate_output_sequence_numbers
+    recalculate_entry_sequence_numbers
+  end
+
+  def dta_string
+    (@records.map(&:to_dta) << build_total_record.to_dta) * "\n" << "\n"
   end
 
   def self.create(path)
@@ -36,11 +42,11 @@ class DTAFile
   end
   
   private
-  
-  def recalculate_output_sequence_numbers
+
+  def recalculate_entry_sequence_numbers
     start = 1
     @records.each do |record|
-      record.output_sequence_number = start
+      record.entry_sequence_number = start
       start += 1
     end
   end
@@ -48,6 +54,7 @@ class DTAFile
   def build_total_record
     TotalRecord.new(
       :total_amount => total,
+      :entry_sequence_number => @records.count + 1,
       :data_file_sender_identification => @records.first.data_file_sender_identification
     )
   end
